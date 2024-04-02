@@ -4,15 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Eflatun.SceneReference;
 
-using SceneManagement;
-
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-namespace Systems.SceneManagement {
+namespace SceneManagement {
     public class SceneGroupManager {
         public event Action<string> OnSceneLoaded = delegate { };
         public event Action<string> OnSceneUnloaded = delegate { };

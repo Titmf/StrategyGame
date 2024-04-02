@@ -1,8 +1,6 @@
 using System;
 using System.Threading.Tasks;
 
-using Systems.SceneManagement;
-
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -65,7 +63,7 @@ namespace SceneManagement {
         }
         
     }
-    
+
     public class LoadingProgress : IProgress<float> {
         public event Action<float> Progressed;
 

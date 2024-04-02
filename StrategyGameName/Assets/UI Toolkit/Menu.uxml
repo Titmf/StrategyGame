@@ -1,0 +1,16 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/MenuText.uss?fileID=7433441132597879392&amp;guid=b25e4fc86e9943749b2a20fc9f7d3001&amp;type=3#MenuText" />
+    <engine:VisualElement name="MenuContainer" style="flex-grow: 1;">
+        <engine:VisualElement name="LeftSide" style="flex-grow: 1; width: 570px; height: 1069px;">
+            <engine:VisualElement style="flex-grow: 1; height: 158px;" />
+            <engine:Label text="GameName" name="GameName" class="menuHeader" style="height: 135px; font-size: 80px; -unity-text-align: middle-center;" />
+            <engine:VisualElement name="ButtonPanel" style="flex-grow: 1; justify-content: space-evenly; align-self: auto; width: 569px; padding-bottom: 200px; padding-top: 0; padding-left: 100px; padding-right: 100px;">
+                <engine:Button text="New Game" enable-rich-text="true" selectable="false" name="NewGame" class="menuButtons" />
+                <engine:Button text="Load Game" name="LoadGame" class="menuButtons" />
+                <engine:Button text="Button" name="Settings" class="menuButtons" />
+                <engine:Button text="Button" name="Credits" class="menuButtons" />
+                <engine:Button text="Button" name="Exit" class="menuButtons" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>
