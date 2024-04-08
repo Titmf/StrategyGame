@@ -1,9 +1,9 @@
-﻿using SceneManagement;
+﻿using ECS.Services.SceneManagement;
+
+using SceneManagement;
 
 using UnityEngine;
 using UnityEngine.UIElements;
-
-using Zenject;
 
 namespace MainMenu
 {
@@ -11,9 +11,8 @@ namespace MainMenu
     {
         private UIDocument _uiDocument;
         private Button _newGameButton;
-
-        [Inject]
-        private SceneLoader _sceneLoader;
+        
+        [SerializeField] private SceneLoader _sceneLoader;
 
         private void Awake()
         {
@@ -26,9 +25,13 @@ namespace MainMenu
         {
             _newGameButton.UnregisterCallback<ClickEvent>(OnStartGameClicked);
         }
-        async void OnStartGameClicked(ClickEvent evt)
+        private void OnStartGameClicked(ClickEvent evt)
         {
             Debug.Log("Start game");
+            LoadScene();
+        }
+        async void LoadScene()
+        {
             await _sceneLoader.LoadSceneGroup(1);
         }
     }
