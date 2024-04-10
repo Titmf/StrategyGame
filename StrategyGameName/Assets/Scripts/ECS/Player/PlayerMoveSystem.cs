@@ -1,10 +1,10 @@
-using ECS.Components;
+using ECS.Player.Components;
 
 using Leopotam.EcsLite;
 
 using UnityEngine;
 
-namespace ECS.Systems.Player
+namespace ECS.Player
 {
     public class PlayerMoveSystem : IEcsRunSystem
     {
@@ -21,7 +21,6 @@ namespace ECS.Systems.Player
 
                 playerComponent.PlayerRb.AddForce(playerInputComponent.MoveInput * playerComponent.PlayerSpeed, ForceMode.Acceleration);
             }
-            
         }
     }
 }

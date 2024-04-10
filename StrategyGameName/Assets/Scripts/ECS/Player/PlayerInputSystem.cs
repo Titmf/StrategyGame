@@ -1,10 +1,11 @@
 using ECS.Data;
+using ECS.Player.Components;
 
 using Leopotam.EcsLite;
 
 using UnityEngine;
 
-namespace ECS.Systems.Player
+namespace ECS.Player
 {
     public class PlayerInputSystem : IEcsRunSystem
     {
@@ -18,7 +19,10 @@ namespace ECS.Systems.Player
             {
                 ref var playerInputComponent = ref playerInputPool.Get(entity);
 
-                playerInputComponent.MoveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
+                if (Input.GetKeyDown(KeyCode.W)) playerInputComponent.MoveInput = new Vector3( 10, 0, 0);
+                if (Input.GetKeyUp(KeyCode.A)) playerInputComponent.MoveInput = new Vector3( 0, 0, 10);
+                if (Input.GetKeyUp(KeyCode.S)) playerInputComponent.MoveInput = new Vector3(-10, 0, 0);
+                if (Input.GetKeyDown(KeyCode.D)) playerInputComponent.MoveInput = new Vector3( 0, 0,  -10);
 
                 if (Input.GetKeyDown(KeyCode.R))
                 {
@@ -28,7 +32,7 @@ namespace ECS.Systems.Player
         }
         private async void ReloadScene(GameSceneData gameSceneData)
         {
-            await gameSceneData.SceneServiceLoader.LoadSceneGroup(1);
+            await gameSceneData.GamePrefabs.SceneServiceLoader.LoadSceneGroup(1);
         }
     }
 }

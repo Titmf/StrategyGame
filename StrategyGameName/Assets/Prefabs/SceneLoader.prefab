@@ -582,14 +582,6 @@ MonoBehaviour:
   - GroupName: First Level
     Scenes:
     - Reference:
-        asset: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
-        guid: 99c9720ab356a0642a771bea13969a05
-      SceneType: 0
-    - Reference:
-        asset: {fileID: 102900000, guid: 83be32a091b0e1c4aa5a6a8f5342fe1e, type: 3}
-        guid: 83be32a091b0e1c4aa5a6a8f5342fe1e
-      SceneType: 0
-    - Reference:
         asset: {fileID: 102900000, guid: 7bc18a921fec7da49a7433d94f1b596f, type: 3}
         guid: 7bc18a921fec7da49a7433d94f1b596f
       SceneType: 0

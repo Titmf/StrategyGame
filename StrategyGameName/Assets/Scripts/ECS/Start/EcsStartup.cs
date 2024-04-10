@@ -1,50 +1,43 @@
 using ECS.Data;
+using ECS.Player;
 using ECS.Services.SceneManagement;
 using ECS.Systems;
-using ECS.Systems.Player;
 
 using Leopotam.EcsLite;
 
-using Platformer;
-
-using SceneManagement;
+using TMPro;
 
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ECS.Start {
     sealed class EcsStartup : MonoBehaviour {
-        private EcsWorld _ecsWorld;    
+        
+        private EcsWorld _ecsWorld;
         private EcsSystems _ecsInitSystem;
         private EcsSystems _updateSystem;
         private EcsSystems _fixedUpdateSystem;
 
-        [SerializeField] private ConfigPlayerSo _configurationSo;
-        [SerializeField] private Text _coinCounter;
+        [SerializeField] private GamePrefabs _gamePrefabs;
+        [SerializeField] private TextMeshProUGUI _coinCounter;
         [SerializeField] private GameObject _gameOverPanel;
         [SerializeField] private GameObject _playerWonPanel;
-        [SerializeField] private SceneLoader _sceneServiceLoader;
+        [SerializeField] private Transform _playerSpawnPoint;
+
         private void Start ()
         {
             _ecsWorld = new EcsWorld();
             var gameSceneData = new GameSceneData();
             
-            gameSceneData.configuration = _configurationSo;
-            gameSceneData.coinCounter = _coinCounter;
-            gameSceneData.gameOverPanel = _gameOverPanel;
-            gameSceneData.playerWonPanel = _playerWonPanel;
-            gameSceneData.SceneServiceLoader = _sceneServiceLoader;
+            gameSceneData.GamePrefabs = _gamePrefabs;
+            gameSceneData.CoinCounter = _coinCounter;
+            gameSceneData.GameOverPanel = _gameOverPanel;
+            gameSceneData.PlayerWonPanel = _playerWonPanel;
+            gameSceneData.PlayerSpawnPoint = _playerSpawnPoint;
             
-            // register your shared data here, for example:
-            // var shared = new Shared ();
-            // systems = new EcsSystems (new EcsWorld (), shared);
+            // TODO to monobeh? 
             
             _ecsInitSystem = new EcsSystems (_ecsWorld, gameSceneData)
                 .Add (new PlayerInitSystem())
-                
-                // register your systems here, for example:
-                // .Add (new TestSystem1 ())
-                // .Add (new TestSystem2 ())
                 
                 // register additional worlds here, for example:
                 // .AddWorld (new EcsWorld (), "events")
@@ -71,11 +64,11 @@ namespace ECS.Start {
         }
 
         private void Update () {
-            _ecsInitSystem?.Run ();
+            _updateSystem.Run();
         }
         
         private void FixedUpdate () {
-            _fixedUpdateSystem?.Run ();
+            _fixedUpdateSystem.Run ();
         }
 
         private void OnDestroy ()

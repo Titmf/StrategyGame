@@ -1,5 +1,7 @@
 using ECS.Components;
 using ECS.Data;
+using ECS.Player;
+using ECS.Player.Components;
 
 using Leopotam.EcsLite;
 
@@ -22,9 +24,9 @@ namespace ECS.Systems
             ref var cameraComponent = ref cameraPool.Get(cameraEntity);
 
             cameraComponent.CameraTransform = Camera.main.transform;
-            cameraComponent.CameraSmoothness = gameData.configuration.cameraFollowSmoothness;
+            cameraComponent.CameraSmoothness = Constants.Numbers.CameraFollowSmoothness;
             cameraComponent.CurVelocity = Vector3.zero;
-            cameraComponent.Offset = new Vector3(0f, 1f, -9f);
+            cameraComponent.Offset = Constants.Vectors.CameraFollowOffset;
 
             this._cameraEntity = cameraEntity;
         }

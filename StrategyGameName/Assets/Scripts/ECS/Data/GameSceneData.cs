@@ -1,20 +1,17 @@
-﻿using ECS.Services.SceneManagement;
-using ECS.Start;
+﻿
+using TMPro;
 
-using Platformer;
-
-using SceneManagement;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ECS.Data
 {
     public class GameSceneData
     {
-        public ConfigPlayerSo configuration;
-        public Text coinCounter;
-        public GameObject playerWonPanel;
-        public GameObject gameOverPanel;
-        public SceneLoader SceneServiceLoader;
+        public GamePrefabs GamePrefabs;
+        public Transform PlayerSpawnPoint;
+
+        public TextMeshProUGUI CoinCounter;
+        public GameObject PlayerWonPanel;
+        public GameObject GameOverPanel;
     }
 }
