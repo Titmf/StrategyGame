@@ -19,7 +19,7 @@ namespace ECS.Player
                 ref var playerComponent = ref playerPool.Get(entity);
                 ref var playerInputComponent = ref playerInputPool.Get(entity);
 
-                playerComponent.PlayerRb.AddForce(playerInputComponent.MoveInput * playerComponent.PlayerSpeed, ForceMode.Acceleration);
+                playerComponent.PlayerRb.AddForce(playerInputComponent.MoveInput * playerComponent.PlayerSpeed, ForceMode.Impulse);
             }
         }
     }

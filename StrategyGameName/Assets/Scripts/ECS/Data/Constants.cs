@@ -11,7 +11,7 @@ namespace ECS.Data
 
         public static class Numbers
         {
-            public const float PlayerSpeed = 10f;
+            public const float PlayerDefaultSpeed = 5f;
             public const float CameraFollowSmoothness = 1f;
             public const int PlayerMaxHealth = 100;
         }

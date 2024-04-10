@@ -2,10 +2,10 @@
 
 using UnityEngine;
 
-namespace ECS.Data
+namespace ECS.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "GamePrefabs", menuName = "ECS/Data/GamePrefabs")]
-    public class GamePrefabs : ScriptableObject
+    public class GamePrefabsSo : ScriptableObject
     {
         public GameObject PlayerPrefab;
         public SceneLoader SceneServiceLoader;

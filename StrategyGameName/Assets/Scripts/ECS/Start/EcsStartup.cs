@@ -1,6 +1,6 @@
 using ECS.Data;
 using ECS.Player;
-using ECS.Services.SceneManagement;
+using ECS.ScriptableObjects;
 using ECS.Systems;
 
 using Leopotam.EcsLite;
@@ -17,7 +17,7 @@ namespace ECS.Start {
         private EcsSystems _updateSystem;
         private EcsSystems _fixedUpdateSystem;
 
-        [SerializeField] private GamePrefabs _gamePrefabs;
+        [SerializeField] private GamePrefabsSo _gamePrefabsSo;
         [SerializeField] private TextMeshProUGUI _coinCounter;
         [SerializeField] private GameObject _gameOverPanel;
         [SerializeField] private GameObject _playerWonPanel;
@@ -28,7 +28,7 @@ namespace ECS.Start {
             _ecsWorld = new EcsWorld();
             var gameSceneData = new GameSceneData();
             
-            gameSceneData.GamePrefabs = _gamePrefabs;
+            gameSceneData.GamePrefabsSo = _gamePrefabsSo;
             gameSceneData.CoinCounter = _coinCounter;
             gameSceneData.GameOverPanel = _gameOverPanel;
             gameSceneData.PlayerWonPanel = _playerWonPanel;
@@ -64,11 +64,11 @@ namespace ECS.Start {
         }
 
         private void Update () {
-            _updateSystem.Run();
+            _updateSystem?.Run();
         }
         
         private void FixedUpdate () {
-            _fixedUpdateSystem.Run ();
+            _fixedUpdateSystem?.Run ();
         }
 
         private void OnDestroy ()

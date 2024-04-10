@@ -26,14 +26,14 @@ namespace ECS.Player
             playerInputPool.Add(playerEntity);
             ref var playerInputComponent = ref playerInputPool.Get(playerEntity);
             
-            var playerGO = Object.Instantiate(gameSceneData.GamePrefabs.PlayerPrefab, gameSceneData.PlayerSpawnPoint.position,
+            var playerGO = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerPrefab, gameSceneData.PlayerSpawnPoint.position,
                 Quaternion.identity);
             
             playerGO.GetComponentInChildren<GroundCheckerView>().GroundedPool = ecsSystems.GetWorld().GetPool<GroundedComponent>();
             playerGO.GetComponentInChildren<GroundCheckerView>().PlayerEntity = playerEntity;
             playerGO.GetComponentInChildren<CollisionCheckerView>().EcsWorld = ecsWorld;
             
-            playerComponent.PlayerSpeed = Constants.Numbers.PlayerSpeed;
+            playerComponent.PlayerSpeed = Constants.Numbers.PlayerDefaultSpeed;
             playerComponent.PlayerTransform = playerGO.transform;
             playerComponent.PlayerCollider = playerGO.GetComponent<CapsuleCollider>();
             playerComponent.PlayerRb = playerGO.GetComponent<Rigidbody>();

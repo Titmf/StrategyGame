@@ -19,20 +19,19 @@ namespace ECS.Player
             {
                 ref var playerInputComponent = ref playerInputPool.Get(entity);
 
-                if (Input.GetKeyDown(KeyCode.W)) playerInputComponent.MoveInput = new Vector3( 10, 0, 0);
-                if (Input.GetKeyUp(KeyCode.A)) playerInputComponent.MoveInput = new Vector3( 0, 0, 10);
-                if (Input.GetKeyUp(KeyCode.S)) playerInputComponent.MoveInput = new Vector3(-10, 0, 0);
-                if (Input.GetKeyDown(KeyCode.D)) playerInputComponent.MoveInput = new Vector3( 0, 0,  -10);
+                if (Input.GetKey(KeyCode.W)) playerInputComponent.MoveInput = Vector3.forward;
+                if (Input.GetKey(KeyCode.A)) playerInputComponent.MoveInput = Vector3.left;
+                if (Input.GetKey(KeyCode.S)) playerInputComponent.MoveInput = Vector3.back;
+                if (Input.GetKey(KeyCode.D)) playerInputComponent.MoveInput = Vector3.right;
 
-                if (Input.GetKeyDown(KeyCode.R))
-                {
-                    ReloadScene(gameSceneData);
-                }
+                if (Input.GetKeyDown(KeyCode.R)) ReloadScene(gameSceneData);
+                
+                if (!Input.anyKey) playerInputComponent.MoveInput = Vector3.zero;
             }
         }
         private async void ReloadScene(GameSceneData gameSceneData)
         {
-            await gameSceneData.GamePrefabs.SceneServiceLoader.LoadSceneGroup(1);
+            await gameSceneData.GamePrefabsSo.SceneServiceLoader.LoadSceneGroup(1);
         }
     }
 }
