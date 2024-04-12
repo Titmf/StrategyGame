@@ -28,7 +28,7 @@ namespace ECS.Systems
             cameraComponent.CurVelocity = Vector3.zero;
             cameraComponent.Offset = Constants.Vectors.CameraFollowOffset;
 
-            this._cameraEntity = cameraEntity;
+            _cameraEntity = cameraEntity;
         }
 
         public void Run(EcsSystems ecsSystems)
@@ -46,7 +46,7 @@ namespace ECS.Systems
                 Vector3 currentPosition = cameraComponent.CameraTransform.position;
                 Vector3 targetPoint = playerComponent.PlayerTransform.position + cameraComponent.Offset;
 
-                cameraComponent.CameraTransform.position = Vector3.SmoothDamp(currentPosition, targetPoint, ref cameraComponent.CurVelocity, cameraComponent.CameraSmoothness);
+                cameraComponent.CameraTransform.position = Vector3.Lerp(currentPosition, targetPoint, cameraComponent.CameraSmoothness);
             }    
         }
     }
