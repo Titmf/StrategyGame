@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24aadc104f3481999a059503e30c743, type: 3}
   m_Name: GamePrefabs
   m_EditorClassIdentifier: 
-  PlayerPrefab: {fileID: 7645838952829504117, guid: bf6a5bab2d3b33241ba59937ff0e7ea0,
+  PlayerPrefab: {fileID: 7645838952829504117, guid: 474a8f898f63bf944bec9e0936db00e4,
+    type: 3}
+  PlayerCameraPrefab: {fileID: 7313793841516485130, guid: 015d337e926d5174db4c537a625bce98,
     type: 3}
   SceneServiceLoader: {fileID: 1835222844075179325, guid: 8318bd77df0022c49be461fd4b2aa2f5,
+    type: 3}
+  HexGridPrefab: {fileID: 9141667757329821384, guid: 0df3594dbf766c044a7abf5fb6adf538,
     type: 3}

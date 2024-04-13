@@ -1,4 +1,6 @@
-﻿using ECS.Data;
+﻿using Cinemachine;
+
+using ECS.Data;
 using ECS.Player.Components;
 using ECS.Start;
 using ECS.Systems;
@@ -27,15 +29,20 @@ namespace ECS.Player
             ref var playerInputComponent = ref playerInputPool.Get(playerEntity);
             
             var playerGO = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerPrefab, gameSceneData.PlayerSpawnPoint.position,
-                Quaternion.identity);
+                gameSceneData.PlayerSpawnPoint.rotation);
             
+            var cinemachineBrain = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerCameraPrefab, playerGO.transform);
+            
+            cinemachineBrain.GetComponentInChildren<CinemachineVirtualCamera>().Follow = playerGO.transform;
+            cinemachineBrain.GetComponentInChildren<CinemachineVirtualCamera>().LookAt = playerGO.transform;
+
             playerGO.GetComponentInChildren<GroundCheckerView>().GroundedPool = ecsSystems.GetWorld().GetPool<GroundedComponent>();
             playerGO.GetComponentInChildren<GroundCheckerView>().PlayerEntity = playerEntity;
             playerGO.GetComponentInChildren<CollisionCheckerView>().EcsWorld = ecsWorld;
             
             playerComponent.PlayerSpeed = Constants.Numbers.PlayerDefaultSpeed;
             playerComponent.PlayerTransform = playerGO.transform;
-            playerComponent.PlayerCollider = playerGO.GetComponent<CapsuleCollider>();
+            //playerComponent.PlayerCollider = playerGO.GetComponent<SphereCollider>();
             playerComponent.PlayerRb = playerGO.GetComponent<Rigidbody>();
         }
     }

@@ -11,7 +11,7 @@ namespace ECS.Services.SceneManagement {
         [SerializeField] Image loadingBar;
         [SerializeField] float fillSpeed = 0.5f;
         [SerializeField] Canvas loadingCanvas;
-        [SerializeField] Camera loadingCamera;
+        [SerializeField] UnityEngine.Camera loadingCamera;
         [SerializeField] SceneGroup[] sceneGroups;
 
         float targetProgress;

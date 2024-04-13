@@ -1,4 +1,5 @@
 using ECS.Data;
+using ECS.Map;
 using ECS.Player;
 using ECS.ScriptableObjects;
 using ECS.Systems;
@@ -18,9 +19,11 @@ namespace ECS.Start {
         private EcsSystems _fixedUpdateSystem;
 
         [SerializeField] private GamePrefabsSo _gamePrefabsSo;
-        [SerializeField] private TextMeshProUGUI _coinCounter;
-        [SerializeField] private GameObject _gameOverPanel;
-        [SerializeField] private GameObject _playerWonPanel;
+        [SerializeField] private GameSceneConfigurationSo _gameSceneConfigurationSo;
+        
+        //[SerializeField] private TextMeshProUGUI _coinCounter;
+        /*[SerializeField] private GameObject _gameOverPanel;
+        [SerializeField] private GameObject _playerWonPanel;*/
         [SerializeField] private Transform _playerSpawnPoint;
 
         private void Start ()
@@ -29,16 +32,14 @@ namespace ECS.Start {
             var gameSceneData = new GameSceneData();
             
             gameSceneData.GamePrefabsSo = _gamePrefabsSo;
-            gameSceneData.CoinCounter = _coinCounter;
-            gameSceneData.GameOverPanel = _gameOverPanel;
-            gameSceneData.PlayerWonPanel = _playerWonPanel;
+            gameSceneData.GameSceneConfigurationSo = _gameSceneConfigurationSo;
+            //gameSceneData.CoinCounter = _coinCounter;
             gameSceneData.PlayerSpawnPoint = _playerSpawnPoint;
-            
-            // TODO to monobeh? 
-            
+
             _ecsInitSystem = new EcsSystems (_ecsWorld, gameSceneData)
+                .Add( new MapInitSystem())
                 .Add (new PlayerInitSystem())
-                
+                //.Add (new PlayerCameraInitSystem())
                 // register additional worlds here, for example:
                 // .AddWorld (new EcsWorld (), "events")
                 
@@ -58,7 +59,7 @@ namespace ECS.Start {
             
             _fixedUpdateSystem = new EcsSystems(_ecsWorld, gameSceneData)
                 .Add(new PlayerMoveSystem())
-                .Add(new CameraFollowSystem());
+                /*.Add(new CameraFollowSystem())*/;
             
             _fixedUpdateSystem.Init();
         }

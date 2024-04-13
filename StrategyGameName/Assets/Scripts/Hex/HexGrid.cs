@@ -1,4 +1,6 @@
-﻿using Hex;
+﻿using System;
+
+using Hex;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,45 +12,39 @@ public class HexGrid : MonoBehaviour {
 	public HexCell cellPrefab;
 	public Color defaultColor = Color.white;
 	
-	private int cellCountX, cellCountZ;
-	private HexGridChunk[] chunks;
+	private int _cellCountX, _cellCountZ;
+	private HexGridChunk[] _chunks;
 	private HexCell[] _cells;
+	private HexCell[] _borderCells;
 	
-	private void Awake () {
-		cellCountX = chunkCountX * HexMetrics.chunkSizeX;
-		cellCountZ = chunkCountZ * HexMetrics.chunkSizeZ;
+	public event Action<HexCell, int, int> OnCreateBorders; 
+	private void Start () {
+		_cellCountX = chunkCountX * HexMetrics.chunkSizeX;
+		_cellCountZ = chunkCountZ * HexMetrics.chunkSizeZ;
 
 		CreateChunks();
 		CreateCells();
+		OnCreateBorders?.Invoke(cellPrefab, _cellCountX, _cellCountZ);
 	}
-
 	private void CreateChunks () {
-		chunks = new HexGridChunk[chunkCountX * chunkCountZ];
+		_chunks = new HexGridChunk[chunkCountX * chunkCountZ];
 
 		for (int z = 0, i = 0; z < chunkCountZ; z++) {
 			for (int x = 0; x < chunkCountX; x++) {
-				HexGridChunk chunk = chunks[i++] = Instantiate(chunkPrefab);
+				HexGridChunk chunk = _chunks[i++] = Instantiate(chunkPrefab);
 				chunk.transform.SetParent(transform);
 			}
 		}
 	}
 	private void CreateCells()
 	{
-		_cells = new HexCell[cellCountZ  * cellCountX];
+		_cells = new HexCell[_cellCountZ  * _cellCountX];
 
-		for (int z = 0, i = 0; z < cellCountZ; z++)
+		for (int z = 0, i = 0; z < _cellCountZ; z++)
 		{
-			for (var x = 0; x < cellCountX; x++)
-			{
-				CreateCell(x, z, i++);
-			}
+			for (var x = 0; x < _cellCountX; x++) CreateCell(x, z, i++);
 		}
 	}
-
-	public void ColorCell (Vector3 position, Color color) {
-		//
-	}
-
 	private void CreateCell (int x, int z, int i) {
 		Vector3 position;
 		position.x = (x + z * 0.5f - z / 2) * (HexMetrics.innerRadius * 2f);
@@ -62,14 +58,13 @@ public class HexGrid : MonoBehaviour {
 		
 		AddCellToChunk(x, z, cell);
 	}
-
 	private void AddCellToChunk (int x, int z, HexCell cell) {
-		int chunkX = x / HexMetrics.chunkSizeX;
-		int chunkZ = z / HexMetrics.chunkSizeZ;
-		HexGridChunk chunk = chunks[chunkX + chunkZ * chunkCountX];
+		var chunkX = x / HexMetrics.chunkSizeX;
+		var chunkZ = z / HexMetrics.chunkSizeZ;
+		HexGridChunk chunk = _chunks[chunkX + chunkZ * chunkCountX];
 		
-		int localX = x - chunkX * HexMetrics.chunkSizeX;
-		int localZ = z - chunkZ * HexMetrics.chunkSizeZ;
+		var localX = x - chunkX * HexMetrics.chunkSizeX;
+		var localZ = z - chunkZ * HexMetrics.chunkSizeZ;
 		chunk.AddCell(localX + localZ * HexMetrics.chunkSizeX, cell);
 	}
 }

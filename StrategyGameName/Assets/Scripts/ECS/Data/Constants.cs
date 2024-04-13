@@ -8,7 +8,6 @@ namespace ECS.Data
         {
             public const string ManaTag = "Mana";
         }
-
         public static class Numbers
         {
             public const float PlayerDefaultSpeed = 5f;
@@ -17,7 +16,7 @@ namespace ECS.Data
         }
         public static class Vectors
         {
-            public static readonly Vector3 CameraFollowOffset = new Vector3(0f, 50f, -100f);
+            public static readonly Vector3 CameraFollowOffset = new Vector3(0f, 100f, -100f);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using ECS.Services.SceneManagement;
+﻿using Cinemachine;
+
+using ECS.Services.SceneManagement;
 
 using UnityEngine;
 
@@ -8,6 +10,8 @@ namespace ECS.ScriptableObjects
     public class GamePrefabsSo : ScriptableObject
     {
         public GameObject PlayerPrefab;
+        public CinemachineBrain PlayerCameraPrefab;
         public SceneLoader SceneServiceLoader;
+        public HexGrid HexGridPrefab;
     }
 }

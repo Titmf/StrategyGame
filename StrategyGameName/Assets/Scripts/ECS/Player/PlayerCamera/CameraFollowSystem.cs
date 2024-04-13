@@ -1,6 +1,5 @@
 using ECS.Components;
 using ECS.Data;
-using ECS.Player;
 using ECS.Player.Components;
 
 using Leopotam.EcsLite;
@@ -25,12 +24,10 @@ namespace ECS.Systems
 
             cameraComponent.CameraTransform = Camera.main.transform;
             cameraComponent.CameraSmoothness = Constants.Numbers.CameraFollowSmoothness;
-            cameraComponent.CurVelocity = Vector3.zero;
             cameraComponent.Offset = Constants.Vectors.CameraFollowOffset;
 
             _cameraEntity = cameraEntity;
         }
-
         public void Run(EcsSystems ecsSystems)
         {
             var filter = ecsSystems.GetWorld().Filter<PlayerComponent>().End();

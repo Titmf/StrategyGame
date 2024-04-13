@@ -19,14 +19,23 @@ namespace ECS.Player
             {
                 ref var playerInputComponent = ref playerInputPool.Get(entity);
 
-                if (Input.GetKey(KeyCode.W)) playerInputComponent.MoveInput = Vector3.forward;
-                if (Input.GetKey(KeyCode.A)) playerInputComponent.MoveInput = Vector3.left;
-                if (Input.GetKey(KeyCode.S)) playerInputComponent.MoveInput = Vector3.back;
-                if (Input.GetKey(KeyCode.D)) playerInputComponent.MoveInput = Vector3.right;
+                if (Input.GetKey(KeyCode.W))
+                    playerInputComponent.MoveInput += Vector3.forward;
+                if (Input.GetKey(KeyCode.A))
+                    playerInputComponent.MoveInput += Vector3.left;
+                if (Input.GetKey(KeyCode.S))
+                    playerInputComponent.MoveInput += Vector3.back;
+                if (Input.GetKey(KeyCode.D))
+                    playerInputComponent.MoveInput += Vector3.right;
 
-                if (Input.GetKeyDown(KeyCode.R)) ReloadScene(gameSceneData);
-                
-                if (!Input.anyKey) playerInputComponent.MoveInput = Vector3.zero;
+                if (playerInputComponent.MoveInput.magnitude > 1f)
+                    playerInputComponent.MoveInput.Normalize();
+
+                if (Input.GetKeyDown(KeyCode.R))
+                    ReloadScene(gameSceneData);
+
+                if (!Input.anyKey)
+                    playerInputComponent.MoveInput = Vector3.zero;
             }
         }
         private async void ReloadScene(GameSceneData gameSceneData)

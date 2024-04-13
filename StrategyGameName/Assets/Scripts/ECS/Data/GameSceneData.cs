@@ -11,9 +11,8 @@ namespace ECS.Data
     {
         public GamePrefabsSo GamePrefabsSo;
         public Transform PlayerSpawnPoint;
-
-        public TextMeshProUGUI CoinCounter;
-        public GameObject PlayerWonPanel;
-        public GameObject GameOverPanel;
+        
+        public GameSceneConfigurationSo GameSceneConfigurationSo;
+        //public TextMeshProUGUI CoinCounter;
     }
 }
