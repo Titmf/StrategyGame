@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ECS.Player
 {
-    public class PlayerInputSystem : IEcsRunSystem
+    public sealed class PlayerInputSystem : IEcsRunSystem
     {
         public void Run(EcsSystems ecsSystems)
         {

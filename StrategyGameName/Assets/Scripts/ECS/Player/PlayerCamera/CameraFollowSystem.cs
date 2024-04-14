@@ -6,7 +6,7 @@ using Leopotam.EcsLite;
 
 using UnityEngine;
 
-namespace ECS.Systems
+namespace ECS.Player.PlayerCamera
 {
     public class CameraFollowSystem : IEcsInitSystem, IEcsRunSystem
     {
@@ -23,8 +23,8 @@ namespace ECS.Systems
             ref var cameraComponent = ref cameraPool.Get(cameraEntity);
 
             cameraComponent.CameraTransform = Camera.main.transform;
-            cameraComponent.CameraSmoothness = Constants.Numbers.CameraFollowSmoothness;
-            cameraComponent.Offset = Constants.Vectors.CameraFollowOffset;
+            cameraComponent.CameraSmoothness = Constants.CameraDefaultConfiguration.CameraFollowSmoothness;
+            cameraComponent.Offset = Constants.CameraDefaultConfiguration.CameraFollowOffset;
 
             _cameraEntity = cameraEntity;
         }

@@ -1,5 +1,7 @@
 ﻿using ECS.Data;
 
+using Hex;
+
 using Leopotam.EcsLite;
 
 using UnityEngine;

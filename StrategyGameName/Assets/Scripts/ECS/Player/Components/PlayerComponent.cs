@@ -6,5 +6,6 @@ namespace ECS.Player.Components {
         public Rigidbody PlayerRb;
         //public SphereCollider PlayerCollider;
         public float PlayerSpeed;
+        public float PlayerRotationSpeed;
     }
 }

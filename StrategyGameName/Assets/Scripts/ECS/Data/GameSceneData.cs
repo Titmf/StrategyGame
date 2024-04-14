@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ECS.Data
 {
-    public class GameSceneData
+    public sealed class GameSceneData
     {
         public GamePrefabsSo GamePrefabsSo;
         public Transform PlayerSpawnPoint;

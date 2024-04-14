@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ECS.Player
 {
-    public class PlayerMoveSystem : IEcsRunSystem
+    public sealed class PlayerMoveSystem : IEcsRunSystem
     {
         public void Run(EcsSystems ecsSystems)
         {
@@ -19,7 +19,17 @@ namespace ECS.Player
                 ref var playerComponent = ref playerPool.Get(entity);
                 ref var playerInputComponent = ref playerInputPool.Get(entity);
 
-                playerComponent.PlayerRb.AddForce(playerInputComponent.MoveInput * playerComponent.PlayerSpeed, ForceMode.Impulse);
+                Vector3 moveDirection = playerInputComponent.MoveInput;
+                
+                moveDirection = playerComponent.PlayerTransform.TransformDirection(moveDirection);
+
+                playerComponent.PlayerRb.AddForce(moveDirection * playerComponent.PlayerSpeed, ForceMode.Impulse);
+                
+                if (playerInputComponent.MoveInput.magnitude > 0.1f)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+                    playerComponent.PlayerTransform.rotation = Quaternion.Lerp(playerComponent.PlayerTransform.rotation, targetRotation, Time.deltaTime * playerComponent.PlayerRotationSpeed);
+                }
             }
         }
     }

@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace ECS.Player
 {
-    public class PlayerInitSystem : IEcsInitSystem
+    public sealed class PlayerInitSystem : IEcsInitSystem
     {
         public void Init(EcsSystems ecsSystems)
         {
@@ -40,7 +40,8 @@ namespace ECS.Player
             playerGO.GetComponentInChildren<GroundCheckerView>().PlayerEntity = playerEntity;
             playerGO.GetComponentInChildren<CollisionCheckerView>().EcsWorld = ecsWorld;
             
-            playerComponent.PlayerSpeed = Constants.Numbers.PlayerDefaultSpeed;
+            playerComponent.PlayerSpeed = Constants.PlayerDefaultCharacteristics.PlayerDefaultSpeed;
+            playerComponent.PlayerRotationSpeed = Constants.PlayerDefaultCharacteristics.PlayerDefaultRotationSpeed;
             playerComponent.PlayerTransform = playerGO.transform;
             //playerComponent.PlayerCollider = playerGO.GetComponent<SphereCollider>();
             playerComponent.PlayerRb = playerGO.GetComponent<Rigidbody>();

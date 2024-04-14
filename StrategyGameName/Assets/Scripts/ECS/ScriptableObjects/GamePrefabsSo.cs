@@ -2,6 +2,8 @@
 
 using ECS.Services.SceneManagement;
 
+using Hex;
+
 using UnityEngine;
 
 namespace ECS.ScriptableObjects
