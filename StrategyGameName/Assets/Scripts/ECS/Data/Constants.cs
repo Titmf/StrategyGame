@@ -10,7 +10,7 @@ namespace ECS.Data
         }
         public static class PlayerDefaultCharacteristics
         {
-            public const float PlayerDefaultSpeed = 5f;
+            public const float PlayerDefaultSpeed = HexMetrics.innerRadius;
             public const float PlayerDefaultRotationSpeed = 5f;
             
             public const int PlayerMaxHealth = 100;

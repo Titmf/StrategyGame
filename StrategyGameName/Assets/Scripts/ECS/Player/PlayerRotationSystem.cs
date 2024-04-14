@@ -1,4 +1,4 @@
-using ECS.Player.Components;
+﻿using ECS.Player.Components;
 
 using Leopotam.EcsLite;
 
@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ECS.Player
 {
-    public sealed class PlayerMoveSystem : IEcsRunSystem
+    public sealed class PlayerRotationSystem : IEcsRunSystem
     {
         public void Run(EcsSystems ecsSystems)
         {
@@ -19,11 +19,13 @@ namespace ECS.Player
                 ref var playerComponent = ref playerPool.Get(entity);
                 ref var playerInputComponent = ref playerInputPool.Get(entity);
 
-                if (playerInputComponent.MoveInput.magnitude > 0.1f)
-                {
-                    Vector3 targetPosition = playerComponent.PlayerTransform.position + (playerInputComponent.MoveInput * playerComponent.PlayerSpeed);
-                    playerComponent.PlayerRb.MovePosition(targetPosition);
-                }
+                if (playerInputComponent.RotateInput == 0) continue;
+
+                float angle = playerInputComponent.RotateInput * 60f;
+                var rotation = playerComponent.PlayerTransform.rotation;
+                Quaternion targetRotation = Quaternion.Euler(0f, angle, 0f) * rotation;
+                rotation = Quaternion.Lerp(rotation, targetRotation, Time.deltaTime * playerComponent.PlayerRotationSpeed);
+                playerComponent.PlayerTransform.rotation = rotation;
             }
         }
     }
