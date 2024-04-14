@@ -16,6 +16,12 @@ namespace ECS.Data
             public const int PlayerMaxHealth = 100;
             public const int PlayerManaMax = 100;
         }
+        
+        public static class InputIntervals
+        {
+            public const float MoveInterval = 0.1f;
+            public const float RotateInterval = 0.2f;
+        }
         public static class CameraDefaultConfiguration
         {
             public const float CameraFollowSmoothness = 1f;
