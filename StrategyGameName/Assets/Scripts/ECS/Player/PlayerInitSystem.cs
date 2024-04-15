@@ -27,21 +27,23 @@ namespace ECS.Player
             var playerInputPool = ecsWorld.GetPool<PlayerInputComponent>();
             playerInputPool.Add(playerEntity);
             ref var playerInputComponent = ref playerInputPool.Get(playerEntity);
+
+            var playerGO = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerPrefab,
+                gameSceneData.PlayerSpawnPoint.position, gameSceneData.PlayerSpawnPoint.rotation);
             
-            var playerGO = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerPrefab, gameSceneData.PlayerSpawnPoint.position,
-                gameSceneData.PlayerSpawnPoint.rotation);
+            var playerCamera = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerCameraPrefab,
+                playerGO.transform);
             
-            var cinemachineBrain = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerCameraPrefab, playerGO.transform);
-            
-            cinemachineBrain.GetComponentInChildren<CinemachineVirtualCamera>().Follow = playerGO.transform;
-            cinemachineBrain.GetComponentInChildren<CinemachineVirtualCamera>().LookAt = playerGO.transform;
+            playerCamera.GetComponentInChildren<CinemachineVirtualCamera>().Follow = playerGO.transform;
+            playerCamera.GetComponentInChildren<CinemachineVirtualCamera>().LookAt = playerGO.transform;
 
             playerGO.GetComponentInChildren<GroundCheckerView>().GroundedPool = ecsSystems.GetWorld().GetPool<GroundedComponent>();
             playerGO.GetComponentInChildren<GroundCheckerView>().PlayerEntity = playerEntity;
             playerGO.GetComponentInChildren<CollisionCheckerView>().EcsWorld = ecsWorld;
             
-            playerComponent.PlayerSpeed = Constants.PlayerDefaultCharacteristics.PlayerDefaultSpeed;
-            playerComponent.PlayerRotationSpeed = Constants.PlayerDefaultCharacteristics.PlayerDefaultRotationSpeed;
+            /*
+            playerComponent.PlayerStep = Constants.PlayerDefaultCharacteristics.PlayerDefaultStepDistance;
+            playerComponent.PlayerRotationSpeed = Constants.PlayerDefaultCharacteristics.PlayerDefaultRotationSpeed;*/
             playerComponent.PlayerTransform = playerGO.transform;
             //playerComponent.PlayerCollider = playerGO.GetComponent<SphereCollider>();
             playerComponent.PlayerRb = playerGO.GetComponent<Rigidbody>();

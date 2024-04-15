@@ -2,11 +2,8 @@ using ECS.Data;
 using ECS.Map;
 using ECS.Player;
 using ECS.ScriptableObjects;
-using ECS.Systems;
 
 using Leopotam.EcsLite;
-
-using TMPro;
 
 using UnityEngine;
 
@@ -20,10 +17,6 @@ namespace ECS.Start {
 
         [SerializeField] private GamePrefabsSo _gamePrefabsSo;
         [SerializeField] private GameSceneConfigurationSo _gameSceneConfigurationSo;
-        
-        //[SerializeField] private TextMeshProUGUI _coinCounter;
-        /*[SerializeField] private GameObject _gameOverPanel;
-        [SerializeField] private GameObject _playerWonPanel;*/
         [SerializeField] private Transform _playerSpawnPoint;
 
         private void Start ()
@@ -33,13 +26,12 @@ namespace ECS.Start {
             
             gameSceneData.GamePrefabsSo = _gamePrefabsSo;
             gameSceneData.GameSceneConfigurationSo = _gameSceneConfigurationSo;
-            //gameSceneData.CoinCounter = _coinCounter;
             gameSceneData.PlayerSpawnPoint = _playerSpawnPoint;
 
             _ecsInitSystem = new EcsSystems (_ecsWorld, gameSceneData)
                 .Add( new MapInitSystem())
                 .Add (new PlayerInitSystem())
-                //.Add (new PlayerCameraInitSystem())
+                
                 // register additional worlds here, for example:
                 // .AddWorld (new EcsWorld (), "events")
                 
@@ -59,7 +51,7 @@ namespace ECS.Start {
             
             _fixedUpdateSystem = new EcsSystems(_ecsWorld, gameSceneData)
                 .Add(new PlayerMoveSystem())
-                //.Add(new PlayerRotationSystem())
+                .Add(new PlayerRotationSystem())
                 ;
             
             _fixedUpdateSystem.Init();

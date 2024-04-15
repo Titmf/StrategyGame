@@ -6,7 +6,9 @@ namespace ECS.Player.Components
     {
         public Vector3 MoveInput;
         public float RotateInput;
-        public bool ShootInput;
-        public float TimePressed; 
+        public float StepAccumulator;
+        public float RotationStepAccumulator;
+        
+        //public bool ShootInput;
     }
 }

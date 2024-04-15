@@ -1,3 +1,4 @@
+using ECS.Data;
 using ECS.Player.Components;
 
 using Leopotam.EcsLite;
@@ -6,10 +7,8 @@ using UnityEngine;
 
 namespace ECS.Player
 {
-    public sealed class PlayerMoveSystem : IEcsRunSystem
+    public class PlayerMoveSystem : IEcsRunSystem
     {
-        private float stepDistance = 1f; // Расстояние на каждый шаг
-
         public void Run(EcsSystems ecsSystems)
         {
             var filter = ecsSystems.GetWorld().Filter<PlayerComponent>().Inc<PlayerInputComponent>().End();
@@ -20,31 +19,19 @@ namespace ECS.Player
             {
                 ref var playerComponent = ref playerPool.Get(entity);
                 ref var playerInputComponent = ref playerInputPool.Get(entity);
-
-                // Переменная для хранения направления движения
+                
+                if (playerInputComponent.MoveInput == Vector3.zero) continue;
+                
                 Vector3 moveDirection = playerInputComponent.MoveInput;
-
-                // Применяем шаг к вектору движения
-                moveDirection *= stepDistance;
-
-                // Преобразуем направление движения относительно локальной системы координат игрока
                 moveDirection = playerComponent.PlayerTransform.TransformDirection(moveDirection);
 
-                // Применяем силу движения к Rigidbody игрока
-                playerComponent.PlayerRb.AddForce(moveDirection, ForceMode.Impulse);
+                playerInputComponent.StepAccumulator += playerInputComponent.MoveInput.magnitude * Constants.InputConfigs.StepAccelerationRate * Time.deltaTime;
 
-                // Выполняем поворот игрока в направлении движения
-                RotatePlayerTowardsMoveDirection(ref playerComponent, moveDirection);
-            }
-        }
-
-        private void RotatePlayerTowardsMoveDirection(ref PlayerComponent playerComponent, Vector3 moveDirection)
-        {
-            // Если вектор движения ненулевой, производим поворот игрока
-            if (moveDirection != Vector3.zero)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-                playerComponent.PlayerTransform.rotation = Quaternion.Lerp(playerComponent.PlayerTransform.rotation, targetRotation, Time.deltaTime * playerComponent.PlayerRotationSpeed);
+                if (playerInputComponent.StepAccumulator >= Constants.InputConfigs.StepThreshold)
+                {
+                    playerComponent.PlayerRb.AddForce(moveDirection * Constants.PlayerDefaultCharacteristics.PlayerDefaultStepDistance, ForceMode.Impulse);
+                    playerInputComponent.StepAccumulator -= Constants.InputConfigs.StepThreshold;
+                }
             }
         }
     }

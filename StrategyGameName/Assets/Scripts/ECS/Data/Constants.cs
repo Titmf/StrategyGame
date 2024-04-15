@@ -8,19 +8,23 @@ namespace ECS.Data
         {
             public const string ManaTag = "Mana";
         }
-        public static class PlayerDefaultCharacteristics
+        public struct PlayerDefaultCharacteristics
         {
-            public const float PlayerDefaultSpeed = HexMetrics.innerRadius;
-            public const float PlayerDefaultRotationSpeed = 5f;
+            public const float PlayerDefaultStepDistance = HexMetrics.innerRadius;
+            public const float RotationStepAngle = 60f;
             
             public const int PlayerMaxHealth = 100;
             public const int PlayerManaMax = 100;
         }
-        
-        public static class InputIntervals
+        public struct InputConfigs
         {
-            public const float MoveInterval = 0.1f;
-            public const float RotateInterval = 0.2f;
+            public const float PlayerDefaultRotationSpeed = 100f;
+            
+            public const float RotationStepThreshold = 0.5f;
+            public const float RotationStepAccelerationRate = 1f;
+            
+            public const float StepThreshold = 0.5f;
+            public const float StepAccelerationRate = 1f;
         }
         public static class CameraDefaultConfiguration
         {
