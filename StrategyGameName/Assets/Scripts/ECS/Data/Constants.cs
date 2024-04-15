@@ -10,21 +10,19 @@ namespace ECS.Data
         }
         public struct PlayerDefaultCharacteristics
         {
-            public const float PlayerDefaultStepDistance = HexMetrics.innerRadius;
+            public const float PlayerDefaultStepDistance = HexMetrics.innerRadius * 2f;
             public const float RotationStepAngle = 60f;
+            
             public const float PlayerDefaultStepLerpSpeed = 1f;
             public const float PlayerDefaultRotationSpeed = 100f;
             
             public const int PlayerMaxHealth = 100;
             public const int PlayerManaMax = 100;
         }
-        public struct InputConfigs
+        public struct InputRotation
         {
-            public const float RotationStepThreshold = 0.5f;
-            public const float RotationStepAccelerationRate = 1f;
-            
-            public const float StepThreshold = 0.5f;
-            public const float StepAccelerationRate = 1f;
+            public const float Left = -1f;
+            public const float Right = 1f;
         }
         public static class CameraDefaultConfiguration
         {
@@ -33,7 +31,7 @@ namespace ECS.Data
         }
         public static class PlayerDefaultConfiguration
         {
-            public static readonly Quaternion PlayerRotationOffset = Quaternion.Euler(0f, 90f, 0f);
+            public static readonly Quaternion PlayerRotationOffsetAtInit = Quaternion.Euler(0f, 90f, 0f);
         }
     }
 }

@@ -15,18 +15,6 @@ namespace ECS.Player
             var playerPool = ecsSystems.GetWorld().GetPool<PlayerComponent>();
             var playerInputPool = ecsSystems.GetWorld().GetPool<PlayerInputComponent>();
 
-#if UNITY_EDITOR
-            bool filterIsEmpty = true;
-
-            foreach (var entity in filter)
-            {
-                filterIsEmpty = false;
-                break;
-            }
-
-            if (filterIsEmpty) Debug.Log("Фильтр пустой");
-#endif
-            
             foreach (var entity in filter)
             {
                 ref var playerComponent = ref playerPool.Get(entity);
@@ -34,19 +22,14 @@ namespace ECS.Player
                 
                 if (playerInputComponent.RotateInput == 0f) continue;
                 
-                playerInputComponent.RotationStepAccumulator += 
-                    Mathf.Abs(playerInputComponent.RotateInput) *
-                    Constants.InputConfigs.RotationStepAccelerationRate * Time.deltaTime;
+                var angle = playerInputComponent.RotateInput * Constants.PlayerDefaultCharacteristics.RotationStepAngle;
+                var rotation = playerComponent.PlayerTransform.rotation;
+                var targetRotation = Quaternion.Euler(0f, angle, 0f) * rotation;
+                rotation = Quaternion.Lerp(rotation, targetRotation, Constants.PlayerDefaultCharacteristics.PlayerDefaultRotationSpeed);
+                
+                playerComponent.PlayerTransform.rotation = rotation;
 
-                if (playerInputComponent.RotationStepAccumulator >= Constants.InputConfigs.RotationStepThreshold)
-                {
-                    float angle = playerInputComponent.RotateInput * Constants.PlayerDefaultCharacteristics.RotationStepAngle;
-                    var rotation = playerComponent.PlayerTransform.rotation;
-                    Quaternion targetRotation = Quaternion.Euler(0f, angle, 0f) * rotation;
-                    rotation = Quaternion.Lerp(rotation, targetRotation, Time.deltaTime * Constants.PlayerDefaultCharacteristics.PlayerDefaultRotationSpeed);
-                    playerComponent.PlayerTransform.rotation = rotation;
-                    playerInputComponent.RotationStepAccumulator -= Constants.InputConfigs.RotationStepThreshold;
-                }
+                playerInputComponent.RotateInput = 0f;
             }
         }
     }

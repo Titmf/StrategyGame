@@ -30,7 +30,7 @@ namespace ECS.Player
 
             var playerGO = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerPrefab,
                 gameSceneData.PlayerSpawnPoint.position,
-                gameSceneData.PlayerSpawnPoint.rotation * Constants.PlayerDefaultConfiguration.PlayerRotationOffset);
+                gameSceneData.PlayerSpawnPoint.rotation * Constants.PlayerDefaultConfiguration.PlayerRotationOffsetAtInit);
             
             var playerCamera = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerCameraPrefab,
                 playerGO.transform);
@@ -43,6 +43,7 @@ namespace ECS.Player
             playerGO.GetComponentInChildren<CollisionCheckerView>().EcsWorld = ecsWorld;
             
             playerComponent.PlayerTransform = playerGO.transform;
+            playerComponent.PlayerRb = playerGO.GetComponent<Rigidbody>();
         }
     }
 }

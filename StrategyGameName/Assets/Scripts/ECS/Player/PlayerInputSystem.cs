@@ -19,41 +19,13 @@ namespace ECS.Player
             {
                 ref var playerInputComponent = ref playerInputPool.Get(entity);
 
-                if (Input.GetKey(KeyCode.W))
-                    playerInputComponent.MoveInput = Vector3.forward;
+                if (Input.GetKeyDown(KeyCode.W)) playerInputComponent.MoveInput = Vector3.forward;
 
-                if (Input.GetKeyDown(KeyCode.W))
-                {
-                    playerInputComponent.MoveInput = Vector3.forward;
-                    playerInputComponent.StepAccumulator = Constants.InputConfigs.StepThreshold;
-                }
+                if (Input.GetKeyDown(KeyCode.S)) playerInputComponent.MoveInput = Vector3.back;
 
-                if (Input.GetKey(KeyCode.S))
-                    playerInputComponent.MoveInput = Vector3.back;
+                if (Input.GetKeyDown(KeyCode.A)) playerInputComponent.RotateInput = Constants.InputRotation.Left;
 
-                if (Input.GetKeyDown(KeyCode.S))
-                {
-                    playerInputComponent.MoveInput = Vector3.back;
-                    playerInputComponent.StepAccumulator = Constants.InputConfigs.StepThreshold;
-                }
-                
-                if (Input.GetKey(KeyCode.A))
-                    playerInputComponent.RotateInput = -1f;
-                
-                if (Input.GetKeyDown(KeyCode.A))
-                {
-                    playerInputComponent.RotateInput = -1f;
-                    playerInputComponent.RotationStepAccumulator = Constants.InputConfigs.RotationStepThreshold;
-                }
-
-                if (Input.GetKey(KeyCode.D))
-                    playerInputComponent.RotateInput = 1f;
-                
-                if (Input.GetKeyDown(KeyCode.D))
-                {
-                    playerInputComponent.RotateInput = 1f;
-                    playerInputComponent.RotationStepAccumulator = Constants.InputConfigs.RotationStepThreshold;
-                }
+                if (Input.GetKeyDown(KeyCode.D)) playerInputComponent.RotateInput = Constants.InputRotation.Right;
 
                 if (Input.GetKeyDown(KeyCode.R))
                     ReloadScene(gameSceneData);

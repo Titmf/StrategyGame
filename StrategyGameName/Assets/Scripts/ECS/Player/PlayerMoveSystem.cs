@@ -25,17 +25,15 @@ namespace ECS.Player
                 Vector3 moveDirection = playerInputComponent.MoveInput;
                 moveDirection = playerComponent.PlayerTransform.TransformDirection(moveDirection);
 
-                playerInputComponent.StepAccumulator += playerInputComponent.MoveInput.magnitude * Constants.InputConfigs.StepAccelerationRate * Time.deltaTime;
+                var position = playerComponent.PlayerTransform.position;
+                position = Vector3.Lerp(
+                    position,
+                    position + moveDirection * Constants.PlayerDefaultCharacteristics.PlayerDefaultStepDistance,
+                    1);
 
-                if (playerInputComponent.StepAccumulator >= Constants.InputConfigs.StepThreshold)
-                {
-                    playerComponent.PlayerTransform.position = Vector3.Lerp(
-                        playerComponent.PlayerTransform.position,
-                        playerComponent.PlayerTransform.position + moveDirection * Constants.PlayerDefaultCharacteristics.PlayerDefaultStepDistance,
-                        Constants.PlayerDefaultCharacteristics.PlayerDefaultStepLerpSpeed);
+                playerComponent.PlayerTransform.position = position;
 
-                    playerInputComponent.StepAccumulator -= Constants.InputConfigs.StepThreshold;
-                }
+                playerInputComponent.MoveInput = Vector3.zero;
             }
         }
     }
