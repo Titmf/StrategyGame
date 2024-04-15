@@ -29,7 +29,11 @@ namespace ECS.Player
 
                 if (playerInputComponent.StepAccumulator >= Constants.InputConfigs.StepThreshold)
                 {
-                    playerComponent.PlayerRb.AddForce(moveDirection * Constants.PlayerDefaultCharacteristics.PlayerDefaultStepDistance, ForceMode.Impulse);
+                    playerComponent.PlayerTransform.position = Vector3.Lerp(
+                        playerComponent.PlayerTransform.position,
+                        playerComponent.PlayerTransform.position + moveDirection * Constants.PlayerDefaultCharacteristics.PlayerDefaultStepDistance,
+                        Constants.PlayerDefaultCharacteristics.PlayerDefaultStepLerpSpeed);
+
                     playerInputComponent.StepAccumulator -= Constants.InputConfigs.StepThreshold;
                 }
             }

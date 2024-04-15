@@ -43,10 +43,7 @@ namespace ECS.Player
                     float angle = playerInputComponent.RotateInput * Constants.PlayerDefaultCharacteristics.RotationStepAngle;
                     var rotation = playerComponent.PlayerTransform.rotation;
                     Quaternion targetRotation = Quaternion.Euler(0f, angle, 0f) * rotation;
-                    rotation = Quaternion.Lerp(rotation, targetRotation, Time.deltaTime * Constants.InputConfigs.PlayerDefaultRotationSpeed);
-#if UNITY_EDITOR
-                    Debug.Log(targetRotation);         
-#endif                    
+                    rotation = Quaternion.Lerp(rotation, targetRotation, Time.deltaTime * Constants.PlayerDefaultCharacteristics.PlayerDefaultRotationSpeed);
                     playerComponent.PlayerTransform.rotation = rotation;
                     playerInputComponent.RotationStepAccumulator -= Constants.InputConfigs.RotationStepThreshold;
                 }

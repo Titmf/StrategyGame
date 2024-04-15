@@ -29,7 +29,8 @@ namespace ECS.Player
             ref var playerInputComponent = ref playerInputPool.Get(playerEntity);
 
             var playerGO = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerPrefab,
-                gameSceneData.PlayerSpawnPoint.position, gameSceneData.PlayerSpawnPoint.rotation);
+                gameSceneData.PlayerSpawnPoint.position,
+                gameSceneData.PlayerSpawnPoint.rotation * Constants.PlayerDefaultConfiguration.PlayerRotationOffset);
             
             var playerCamera = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerCameraPrefab,
                 playerGO.transform);
@@ -41,12 +42,7 @@ namespace ECS.Player
             playerGO.GetComponentInChildren<GroundCheckerView>().PlayerEntity = playerEntity;
             playerGO.GetComponentInChildren<CollisionCheckerView>().EcsWorld = ecsWorld;
             
-            /*
-            playerComponent.PlayerStep = Constants.PlayerDefaultCharacteristics.PlayerDefaultStepDistance;
-            playerComponent.PlayerRotationSpeed = Constants.PlayerDefaultCharacteristics.PlayerDefaultRotationSpeed;*/
             playerComponent.PlayerTransform = playerGO.transform;
-            //playerComponent.PlayerCollider = playerGO.GetComponent<SphereCollider>();
-            playerComponent.PlayerRb = playerGO.GetComponent<Rigidbody>();
         }
     }
 }
