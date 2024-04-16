@@ -13,8 +13,8 @@ namespace ECS.Data
             public const float PlayerDefaultStepDistance = HexMetrics.innerRadius * 2f;
             public const float RotationStepAngle = 60f;
             
-            public const float PlayerDefaultStepLerpSpeed = 1f;
-            public const float PlayerDefaultRotationSpeed = 100f;
+            public const float PlayerDefaultStepDuration = 0.4f;
+            public const float PlayerDefaultRotationDuration  = 0.2f;
             
             public const int PlayerMaxHealth = 100;
             public const int PlayerManaMax = 100;

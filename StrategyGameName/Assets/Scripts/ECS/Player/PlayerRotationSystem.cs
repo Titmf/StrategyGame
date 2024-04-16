@@ -1,4 +1,6 @@
-﻿using ECS.Data;
+﻿using DG.Tweening;
+
+using ECS.Data;
 using ECS.Player.Components;
 
 using Leopotam.EcsLite;
@@ -23,12 +25,9 @@ namespace ECS.Player
                 if (playerInputComponent.RotateInput == 0f) continue;
                 
                 var angle = playerInputComponent.RotateInput * Constants.PlayerDefaultCharacteristics.RotationStepAngle;
-                var rotation = playerComponent.PlayerTransform.rotation;
-                var targetRotation = Quaternion.Euler(0f, angle, 0f) * rotation;
-                rotation = Quaternion.Lerp(rotation, targetRotation, Constants.PlayerDefaultCharacteristics.PlayerDefaultRotationSpeed);
-                
-                playerComponent.PlayerTransform.rotation = rotation;
 
+                playerComponent.PlayerTransform.DORotate(new Vector3(0f, angle, 0f), Constants.PlayerDefaultCharacteristics.PlayerDefaultRotationDuration, RotateMode.WorldAxisAdd).SetEase(Ease.InOutSine);
+                
                 playerInputComponent.RotateInput = 0f;
             }
         }

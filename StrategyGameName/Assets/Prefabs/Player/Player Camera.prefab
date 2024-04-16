@@ -64,9 +64,9 @@ MonoBehaviour:
   m_YDamping: 1.5
   m_ZDamping: 1.5
   m_AngularDampingMode: 0
-  m_PitchDamping: 1
-  m_YawDamping: 1
-  m_RollDamping: 1
+  m_PitchDamping: 0.3
+  m_YawDamping: 0.3
+  m_RollDamping: 0.3
   m_AngularDamping: 0
 --- !u!114 &6635462408238839025
 MonoBehaviour:
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_ScreenY: 0.5
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
-  m_SoftZoneWidth: 0.8
+  m_SoftZoneWidth: 0.4
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
   m_BiasY: 0

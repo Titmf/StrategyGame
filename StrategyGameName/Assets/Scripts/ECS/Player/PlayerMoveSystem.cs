@@ -1,3 +1,5 @@
+using DG.Tweening;
+
 using ECS.Data;
 using ECS.Player.Components;
 
@@ -22,16 +24,15 @@ namespace ECS.Player
                 
                 if (playerInputComponent.MoveInput == Vector3.zero) continue;
                 
-                Vector3 moveDirection = playerInputComponent.MoveInput;
-                moveDirection = playerComponent.PlayerTransform.TransformDirection(moveDirection);
+                var moveDirection = playerComponent.PlayerTransform.TransformDirection(playerInputComponent.MoveInput);
 
                 var position = playerComponent.PlayerTransform.position;
-                position = Vector3.Lerp(
-                    position,
-                    position + moveDirection * Constants.PlayerDefaultCharacteristics.PlayerDefaultStepDistance,
-                    1);
-
-                playerComponent.PlayerTransform.position = position;
+                
+                var targetPosition = position + moveDirection * Constants.PlayerDefaultCharacteristics.PlayerDefaultStepDistance;
+                
+                playerComponent.PlayerTransform.DOMove(targetPosition, Constants.PlayerDefaultCharacteristics.PlayerDefaultStepDuration).SetEase(Ease.InOutSine);
+                
+                /*playerComponent.PlayerTransform.position = position;*/
 
                 playerInputComponent.MoveInput = Vector3.zero;
             }
