@@ -60,6 +60,13 @@ public struct HexCoordinates {
 
 		return new HexCoordinates(iX, iZ);
 	}
+	
+	public static Vector3 HexToCartesian(HexCoordinates hexCoordinates)
+	{
+		float x = hexCoordinates.X - hexCoordinates.Z * 0.5f;
+		float z = -hexCoordinates.X - hexCoordinates.Z;
+		return new Vector3(x, 0, z);
+	}
 
 	public override string ToString () {
 		return "(" +

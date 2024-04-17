@@ -32,6 +32,13 @@ namespace ECS.Data
         public static class PlayerDefaultConfiguration
         {
             public static readonly Quaternion PlayerRotationOffsetAtInit = Quaternion.Euler(0f, 90f, 0f);
+            public static HexCoordinates PlayerStartPositionByHexCoordinates = new HexCoordinates(0, 0);
+            public static readonly Vector3 PlayerStartPositionOffset = new Vector3(0f, 60f, 0f);
+        }
+        public static class HexDefaultConfiguration
+        {
+            public static Color DefaultColor = Color.white;
+            public static Quaternion RotationOffsetAtInit = Quaternion.Euler(0f, 30f, 0f);
         }
     }
 }

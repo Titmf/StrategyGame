@@ -16,8 +16,7 @@ namespace ECS.Start {
         private EcsSystems _fixedUpdateSystem;
 
         [SerializeField] private GamePrefabsSo _gamePrefabsSo;
-        [SerializeField] private GameSceneConfigurationSo _gameSceneConfigurationSo;
-        [SerializeField] private Transform _playerSpawnPoint;
+        [SerializeField] private MapConfigurationSo _mapConfigurationSo;
 
         private void Start ()
         {
@@ -25,11 +24,11 @@ namespace ECS.Start {
             var gameSceneData = new GameSceneData();
             
             gameSceneData.GamePrefabsSo = _gamePrefabsSo;
-            gameSceneData.GameSceneConfigurationSo = _gameSceneConfigurationSo;
-            gameSceneData.PlayerSpawnPoint = _playerSpawnPoint;
+            gameSceneData.MapConfigurationSo = _mapConfigurationSo;
 
             _ecsInitSystem = new EcsSystems (_ecsWorld, gameSceneData)
-                .Add( new MapInitSystem())
+                .Add (new MapInitSystem())
+                .Add (new HexCellViewInitSystem())
                 .Add (new PlayerInitSystem())
                 
                 // register additional worlds here, for example:

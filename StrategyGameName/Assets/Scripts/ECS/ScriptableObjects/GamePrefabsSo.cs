@@ -14,6 +14,7 @@ namespace ECS.ScriptableObjects
         public GameObject PlayerPrefab;
         public CinemachineBrain PlayerCameraPrefab;
         public SceneLoader SceneServiceLoader;
-        public HexGrid HexGridPrefab;
+        //public HexGrid HexGridPrefab;
+        public GameObject HexModelPrefab;
     }
 }

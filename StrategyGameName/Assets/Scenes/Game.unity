@@ -463,9 +463,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gamePrefabsSo: {fileID: 11400000, guid: 90ea5ab341967084d8c80e0ad8051c72, type: 2}
-  _gameSceneConfigurationSo: {fileID: 11400000, guid: f785346c645695d488335c7ab046ca5b,
+  _mapConfigurationSo: {fileID: 11400000, guid: f785346c645695d488335c7ab046ca5b,
     type: 2}
-  _playerSpawnPoint: {fileID: 790046589}
 --- !u!1 &2099748916
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,22 +28,23 @@ namespace ECS.Player
             playerInputPool.Add(playerEntity);
             ref var playerInputComponent = ref playerInputPool.Get(playerEntity);
 
-            var playerGO = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerPrefab,
-                gameSceneData.PlayerSpawnPoint.position,
-                gameSceneData.PlayerSpawnPoint.rotation * Constants.PlayerDefaultConfiguration.PlayerRotationOffsetAtInit);
+            var playerGo = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerPrefab,
+                HexCoordinates.HexToCartesian(Constants.PlayerDefaultConfiguration.PlayerStartPositionByHexCoordinates) + Constants.PlayerDefaultConfiguration.PlayerStartPositionOffset, 
+                 Constants.PlayerDefaultConfiguration.PlayerRotationOffsetAtInit);
             
             var playerCamera = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerCameraPrefab,
-                playerGO.transform);
+                playerGo.transform);
             
-            playerCamera.GetComponentInChildren<CinemachineVirtualCamera>().Follow = playerGO.transform;
-            playerCamera.GetComponentInChildren<CinemachineVirtualCamera>().LookAt = playerGO.transform;
+            playerCamera.GetComponentInChildren<CinemachineVirtualCamera>().Follow = playerGo.transform;
+            playerCamera.GetComponentInChildren<CinemachineVirtualCamera>().LookAt = playerGo.transform;
 
-            playerGO.GetComponentInChildren<GroundCheckerView>().GroundedPool = ecsSystems.GetWorld().GetPool<GroundedComponent>();
-            playerGO.GetComponentInChildren<GroundCheckerView>().PlayerEntity = playerEntity;
-            playerGO.GetComponentInChildren<CollisionCheckerView>().EcsWorld = ecsWorld;
+            playerGo.GetComponentInChildren<GroundCheckerView>().GroundedPool = ecsSystems.GetWorld().GetPool<GroundedComponent>();
+            playerGo.GetComponentInChildren<GroundCheckerView>().PlayerEntity = playerEntity;
+            playerGo.GetComponentInChildren<CollisionCheckerView>().EcsWorld = ecsWorld;
             
-            playerComponent.PlayerTransform = playerGO.transform;
-            playerComponent.PlayerRb = playerGO.GetComponent<Rigidbody>();
+            playerComponent.PlayerTransform = playerGo.transform;
+            playerComponent.PlayerRb = playerGo.GetComponent<Rigidbody>();
+            playerComponent.PlayerPositionByHexCoordinates = Constants.PlayerDefaultConfiguration.PlayerStartPositionByHexCoordinates;
         }
     }
 }
