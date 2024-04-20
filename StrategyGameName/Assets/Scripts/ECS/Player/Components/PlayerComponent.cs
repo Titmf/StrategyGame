@@ -5,5 +5,6 @@ namespace ECS.Player.Components {
         public Transform PlayerTransform;
         public Rigidbody PlayerRb;
         public HexCoordinates PlayerPositionByHexCoordinates;
+        public int PlayerDirectionIndex;
     }
 }

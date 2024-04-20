@@ -29,7 +29,7 @@ namespace ECS.Player
             ref var playerInputComponent = ref playerInputPool.Get(playerEntity);
 
             var playerGo = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerPrefab,
-                HexCoordinates.HexToCartesian(Constants.PlayerDefaultConfiguration.PlayerStartPositionByHexCoordinates) + Constants.PlayerDefaultConfiguration.PlayerStartPositionOffset, 
+                HexCoordinates.ToPosition(Constants.PlayerDefaultConfiguration.PlayerStartPositionByHexCoordinates) + Constants.PlayerDefaultConfiguration.PlayerPositionOffset, 
                  Constants.PlayerDefaultConfiguration.PlayerRotationOffsetAtInit);
             
             var playerCamera = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerCameraPrefab,

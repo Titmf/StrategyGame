@@ -1,4 +1,6 @@
-﻿using DG.Tweening;
+﻿using System;
+
+using DG.Tweening;
 
 using ECS.Data;
 using ECS.Player.Components;
@@ -24,12 +26,26 @@ namespace ECS.Player
                 
                 if (playerInputComponent.RotateInput == 0f) continue;
                 
+                playerComponent.PlayerDirectionIndex += playerInputComponent.RotateInput;
+                
+                playerComponent.PlayerDirectionIndex = CyclicIndexLimitation(playerComponent.PlayerDirectionIndex);
+
                 var angle = playerInputComponent.RotateInput * Constants.PlayerDefaultCharacteristics.RotationStepAngle;
 
                 playerComponent.PlayerTransform.DORotate(new Vector3(0f, angle, 0f), Constants.PlayerDefaultCharacteristics.PlayerDefaultRotationDuration, RotateMode.WorldAxisAdd).SetEase(Ease.InOutSine);
                 
-                playerInputComponent.RotateInput = 0f;
+                playerInputComponent.RotateInput = 0;
             }
         }
+
+        private Func<int, int> CyclicIndexLimitation = (currentIndex) =>
+        {
+            return currentIndex switch
+            {
+                < Constants.InputRotation.minValue => Constants.InputRotation.maxValue,
+                > Constants.InputRotation.maxValue => Constants.InputRotation.minValue,
+                _ => currentIndex
+            };
+        };
     }
 }

@@ -1,3 +1,5 @@
+using System;
+
 using DG.Tweening;
 
 using ECS.Data;
@@ -21,21 +23,34 @@ namespace ECS.Player
             {
                 ref var playerComponent = ref playerPool.Get(entity);
                 ref var playerInputComponent = ref playerInputPool.Get(entity);
-                
-                if (playerInputComponent.MoveInput == Vector3.zero) continue;
-                
-                var moveDirection = playerComponent.PlayerTransform.TransformDirection(playerInputComponent.MoveInput);
 
-                var position = playerComponent.PlayerTransform.position;
-                
-                var targetPosition = position + moveDirection * Constants.PlayerDefaultCharacteristics.PlayerDefaultStepDistance;
+                var moveInput = playerInputComponent.MoveInput;
+                if (moveInput == 0) continue;
+
+                var currPlayerPosByHex = playerComponent.PlayerPositionByHexCoordinates;
+                var currHexCoordinateByDirIndex = HexCoordinatesByDirectionIndex(playerComponent.PlayerDirectionIndex);
+                var targetHexPos = new HexCoordinates(currPlayerPosByHex.X + currHexCoordinateByDirIndex.X * moveInput, currPlayerPosByHex.Z + currHexCoordinateByDirIndex.Z * moveInput);
+
+                playerComponent.PlayerPositionByHexCoordinates = targetHexPos;
+                var targetPosition = HexCoordinates.ToPosition(targetHexPos) + Constants.PlayerDefaultConfiguration.PlayerPositionOffset;
                 
                 playerComponent.PlayerTransform.DOMove(targetPosition, Constants.PlayerDefaultCharacteristics.PlayerDefaultStepDuration).SetEase(Ease.InOutSine);
-                
-                /*playerComponent.PlayerTransform.position = position;*/
 
-                playerInputComponent.MoveInput = Vector3.zero;
+                playerInputComponent.MoveInput = 0;
             }
+        }
+        private HexCoordinates HexCoordinatesByDirectionIndex(int currentDirectionIndex)
+        {
+            return currentDirectionIndex switch
+            {
+                5 => new HexCoordinates(0, 1),
+                0 => new HexCoordinates(1, 0),
+                1 => new HexCoordinates(1, -1),
+                2 => new HexCoordinates(0, -1),
+                3 => new HexCoordinates(-1, 0),
+                4 => new HexCoordinates(-1, 1),
+                _ => throw new ArgumentOutOfRangeException(nameof(currentDirectionIndex), currentDirectionIndex, "Direction index out of range wtf")
+            };
         }
     }
 }

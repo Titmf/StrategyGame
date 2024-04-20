@@ -19,9 +19,9 @@ namespace ECS.Player
             {
                 ref var playerInputComponent = ref playerInputPool.Get(entity);
 
-                if (Input.GetKeyDown(KeyCode.W)) playerInputComponent.MoveInput = Vector3.forward;
+                if (Input.GetKeyDown(KeyCode.W)) playerInputComponent.MoveInput = 1;
 
-                if (Input.GetKeyDown(KeyCode.S)) playerInputComponent.MoveInput = Vector3.back;
+                if (Input.GetKeyDown(KeyCode.S)) playerInputComponent.MoveInput = -1;
 
                 if (Input.GetKeyDown(KeyCode.A)) playerInputComponent.RotateInput = Constants.InputRotation.Left;
 

@@ -40,9 +40,7 @@ namespace Hex
 			_cells = new HexCell[_cellCountZ  * _cellCountX];
 
 			for (int z = 0, i = 0; z < _cellCountZ; z++)
-			{
-				for (var x = 0; x < _cellCountX; x++) CreateCell(x, z, i++);
-			}
+			for (var x = 0; x < _cellCountX; x++) CreateCell(x, z, i++);
 		}
 		private void CreateCell (int x, int z, int i) {
 			Vector3 position;
