@@ -23,9 +23,9 @@ namespace ECS.Player
 
                 if (Input.GetKeyDown(KeyCode.S)) playerInputComponent.MoveInput = -1;
 
-                if (Input.GetKeyDown(KeyCode.A)) playerInputComponent.RotateInput = Constants.InputRotation.Left;
+                if (Input.GetKeyDown(KeyCode.A)) playerInputComponent.RotateInput = -1;
 
-                if (Input.GetKeyDown(KeyCode.D)) playerInputComponent.RotateInput = Constants.InputRotation.Right;
+                if (Input.GetKeyDown(KeyCode.D)) playerInputComponent.RotateInput = 1;
 
                 if (Input.GetKeyDown(KeyCode.R))
                     ReloadScene(gameSceneData);

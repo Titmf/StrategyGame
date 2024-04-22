@@ -20,15 +20,27 @@ namespace ECS.Map {
                     position.x = (x + z * 0.5f - z / 2) * (HexMetrics.innerRadius * 2f);
                     position.y = 0f;
                     position.z = z * (HexMetrics.outerRadius * 1.5f);
-                    
-                    var cellEntity = ecsWorld.NewEntity();
-                    var cellPool = ecsWorld.GetPool<HexCellComponent>();
-                    cellPool.Add(cellEntity);
-                    ref var cellComponent = ref cellPool.Get(cellEntity);
 
-                    cellComponent.Position = position;
-                    cellComponent.Color = Constants.HexDefaultConfiguration.DefaultColor;
-                    cellComponent.Coordinates = HexCoordinates.FromOffsetCoordinates(x, z);
+                    #region CellInit
+                    var cellEntity = ecsWorld.NewEntity();
+                    
+                    var cellCoordinatePool = ecsWorld.GetPool<HexCellPositionComponent>();
+                    cellCoordinatePool.Add(cellEntity);
+                    ref var hexCellPositionComponent = ref cellCoordinatePool.Get(cellEntity);
+
+                    var cellColorPool = ecsWorld.GetPool<HexCellColorComponent>();
+                    cellColorPool.Add(cellEntity);
+                    ref var hexCellColorComponent = ref cellColorPool.Get(cellEntity);
+                    
+                    var cellMaterialPool = ecsWorld.GetPool<HexCellMaterialComponent>();
+                    cellMaterialPool.Add(cellEntity);
+                    ref var hexCellMaterialComponent = ref cellMaterialPool.Get(cellEntity);
+                    
+                    hexCellPositionComponent.Position = position;
+                    hexCellPositionComponent.Coordinates = HexCoordinates.FromOffsetCoordinates(x, z);
+                    
+                    hexCellColorComponent.Color = Constants.HexDefaultConfiguration.DefaultColor;
+                    #endregion
                 }
             }
         }

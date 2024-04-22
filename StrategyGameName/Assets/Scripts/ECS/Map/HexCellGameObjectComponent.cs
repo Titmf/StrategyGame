@@ -2,7 +2,7 @@
 
 namespace ECS.Map
 {
-    struct HexCellViewComponent {
+    struct HexCellGameObjectComponent {
         public GameObject GameObject;
     }
 }

@@ -26,6 +26,7 @@ namespace ECS.Systems
             if (GroundedPool.Has(PlayerEntity))
             {
                 GroundedPool.Del(PlayerEntity);
+                
             }
         }
     }

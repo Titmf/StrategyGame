@@ -7,6 +7,7 @@ namespace ECS.Data
         public static class Tags
         {
             public const string ManaTag = "Mana";
+            public const string EmissionColorTag = "_EmissionColor";
         }
         public struct PlayerDefaultCharacteristics
         {
@@ -40,8 +41,8 @@ namespace ECS.Data
         public static class HexDefaultConfiguration
         {
             public static Color DefaultColor = Color.white;
+            
             public static Quaternion RotationOffsetAtInit = Quaternion.Euler(0f, 30f, 0f);
-            public static float HexMultiplicator = 55f;
         }
     }
 }

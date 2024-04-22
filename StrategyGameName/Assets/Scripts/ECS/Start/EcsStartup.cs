@@ -51,6 +51,7 @@ namespace ECS.Start {
             _fixedUpdateSystem = new EcsSystems(_ecsWorld, gameSceneData)
                 .Add(new PlayerMoveSystem())
                 .Add(new PlayerRotationSystem())
+                .Add(new HexCellColorChangeSystem())
                 ;
             
             _fixedUpdateSystem.Init();

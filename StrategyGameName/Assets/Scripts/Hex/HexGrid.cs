@@ -52,7 +52,7 @@ namespace Hex
 			cell.transform.localPosition = position;
 			cell.coordinates = HexCoordinates.FromOffsetCoordinates(x, z);
 			
-			cell.color = defaultColor;
+			//cell.color = defaultColor;
 		
 			AddCellToChunk(x, z, cell);
 		}

@@ -7,8 +7,6 @@ using ECS.Player.Components;
 
 using Leopotam.EcsLite;
 
-using UnityEngine;
-
 namespace ECS.Player
 {
     public class PlayerMoveSystem : IEcsRunSystem
@@ -43,12 +41,12 @@ namespace ECS.Player
         {
             return currentDirectionIndex switch
             {
-                5 => new HexCoordinates(0, 1),
                 0 => new HexCoordinates(1, 0),
                 1 => new HexCoordinates(1, -1),
                 2 => new HexCoordinates(0, -1),
                 3 => new HexCoordinates(-1, 0),
                 4 => new HexCoordinates(-1, 1),
+                5 => new HexCoordinates(0, 1),
                 _ => throw new ArgumentOutOfRangeException(nameof(currentDirectionIndex), currentDirectionIndex, "Direction index out of range wtf")
             };
         }

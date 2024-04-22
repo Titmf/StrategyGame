@@ -30,9 +30,9 @@ namespace ECS.Player
                 
                 playerComponent.PlayerDirectionIndex = CyclicIndexLimitation(playerComponent.PlayerDirectionIndex);
 
-                var angle = playerInputComponent.RotateInput * Constants.PlayerDefaultCharacteristics.RotationStepAngle;
+                var angle = playerComponent.PlayerDirectionIndex * Constants.PlayerDefaultCharacteristics.RotationStepAngle;
 
-                playerComponent.PlayerTransform.DORotate(new Vector3(0f, angle, 0f), Constants.PlayerDefaultCharacteristics.PlayerDefaultRotationDuration, RotateMode.WorldAxisAdd).SetEase(Ease.InOutSine);
+                playerComponent.PlayerTransform.DORotate(new Vector3(0f, 90f + angle, 0f), Constants.PlayerDefaultCharacteristics.PlayerDefaultRotationDuration).SetEase(Ease.InOutSine);
                 
                 playerInputComponent.RotateInput = 0;
             }
