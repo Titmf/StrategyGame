@@ -27,10 +27,9 @@ namespace ECS.Start {
             gameSceneData.MapConfigurationSo = _mapConfigurationSo;
 
             _ecsInitSystem = new EcsSystems (_ecsWorld, gameSceneData)
-                .Add (new MapInitSystem())
-                .Add (new HexCellViewInitSystem())
+                .Add (new HexMapInitSystem())
+                .Add (new HexCellGameObjectInitSystem())
                 .Add (new PlayerInitSystem())
-                
                 // register additional worlds here, for example:
                 // .AddWorld (new EcsWorld (), "events")
                 
@@ -51,7 +50,7 @@ namespace ECS.Start {
             _fixedUpdateSystem = new EcsSystems(_ecsWorld, gameSceneData)
                 .Add(new PlayerMoveSystem())
                 .Add(new PlayerRotationSystem())
-                .Add(new HexCellColorChangeSystem())
+                .Add(new HexCellVisualEffect())
                 ;
             
             _fixedUpdateSystem.Init();

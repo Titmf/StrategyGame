@@ -3,7 +3,7 @@ using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace ECS.Map {
-    public class MapInitSystem : IEcsInitSystem {
+    public class HexMapInitSystem : IEcsInitSystem {
         public void Init(EcsSystems ecsSystems) {
             var ecsWorld = ecsSystems.GetWorld();
             var gameSceneData = ecsSystems.GetShared<GameSceneData>();
@@ -28,14 +28,10 @@ namespace ECS.Map {
                     cellCoordinatePool.Add(cellEntity);
                     ref var hexCellPositionComponent = ref cellCoordinatePool.Get(cellEntity);
 
-                    var cellColorPool = ecsWorld.GetPool<HexCellColorComponent>();
+                    var cellColorPool = ecsWorld.GetPool<HexCellInputColorComponent>();
                     cellColorPool.Add(cellEntity);
                     ref var hexCellColorComponent = ref cellColorPool.Get(cellEntity);
-                    
-                    var cellMaterialPool = ecsWorld.GetPool<HexCellMaterialComponent>();
-                    cellMaterialPool.Add(cellEntity);
-                    ref var hexCellMaterialComponent = ref cellMaterialPool.Get(cellEntity);
-                    
+
                     hexCellPositionComponent.Position = position;
                     hexCellPositionComponent.Coordinates = HexCoordinates.FromOffsetCoordinates(x, z);
                     

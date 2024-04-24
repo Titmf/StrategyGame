@@ -2,7 +2,7 @@
 
 namespace ECS.Map
 {
-    public struct HexCellColorComponent
+    public struct HexCellInputColorComponent
     {
         public Color Color;
         public bool IsChanged;
