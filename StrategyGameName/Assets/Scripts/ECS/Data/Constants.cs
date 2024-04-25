@@ -1,3 +1,5 @@
+using Hex;
+
 using UnityEngine;
 
 namespace ECS.Data

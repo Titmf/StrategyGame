@@ -51,6 +51,8 @@ namespace ECS.Start {
                 .Add(new PlayerMoveSystem())
                 .Add(new PlayerRotationSystem())
                 .Add(new HexCellVisualEffect())
+                .Add(new PlayerGrabHandSystem())
+                .Add(new PlayerSkillsSystem())
                 ;
             
             _fixedUpdateSystem.Init();

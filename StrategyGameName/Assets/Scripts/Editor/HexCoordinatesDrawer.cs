@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Hex;
+
+using UnityEngine;
 using UnityEditor;
 
 [CustomPropertyDrawer(typeof(HexCoordinates))]

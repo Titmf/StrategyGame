@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Hex;
+
+using UnityEngine;
 
 namespace ECS.Map
 {

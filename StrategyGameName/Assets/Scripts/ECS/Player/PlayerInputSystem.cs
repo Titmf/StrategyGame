@@ -20,12 +20,18 @@ namespace ECS.Player
                 ref var playerInputComponent = ref playerInputPool.Get(entity);
 
                 if (Input.GetKeyDown(KeyCode.W)) playerInputComponent.MoveInput = 1;
-
                 if (Input.GetKeyDown(KeyCode.S)) playerInputComponent.MoveInput = -1;
-
                 if (Input.GetKeyDown(KeyCode.A)) playerInputComponent.RotateInput = -1;
-
                 if (Input.GetKeyDown(KeyCode.D)) playerInputComponent.RotateInput = 1;
+                
+                if (Input.GetKeyDown(KeyCode.Alpha1)) playerInputComponent.FormationNumber = 1;
+                if (Input.GetKeyDown(KeyCode.Alpha2)) playerInputComponent.FormationNumber = 2;
+                if (Input.GetKeyDown(KeyCode.Alpha3)) playerInputComponent.FormationNumber = 3;
+                if (Input.GetKeyDown(KeyCode.Alpha4)) playerInputComponent.FormationNumber = 4;
+                if (Input.GetKeyDown(KeyCode.Q)) playerInputComponent.FormationNumber = 0;
+                
+                if (Input.GetKeyDown(KeyCode.F)) playerInputComponent.OperationNumber = 1;
+                if (Input.GetKeyDown(KeyCode.Space)) playerInputComponent.OperationNumber = 2;
 
                 if (Input.GetKeyDown(KeyCode.R))
                     ReloadScene(gameSceneData);

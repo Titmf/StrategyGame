@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Hex;
+
+using UnityEngine;
 
 public class HexCell : MonoBehaviour {
 

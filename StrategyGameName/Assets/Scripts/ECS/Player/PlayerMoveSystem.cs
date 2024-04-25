@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 using DG.Tweening;
 
@@ -6,16 +7,18 @@ using ECS.Data;
 using ECS.Map;
 using ECS.Player.Components;
 
+using Hex;
+
 using Leopotam.EcsLite;
 
 namespace ECS.Player
 {
     public class PlayerMoveSystem : IEcsRunSystem
     {
-        private int[] X = new int[] { 1, 1, 0, -1, -1, 0, 0 };
-        private int[] Z = new int[] { 0, -1, -1, 0, 1, 1, 0 };
-        
-        private const int Upper = 7;
+        private readonly HexCoordinates[] _stepHexesToEffect = {
+            new(1, 0), new(1, -1), new(0, -1), new(-1, 0),
+            new(-1, 1), new(0, 1), new(0, 0)
+        };
         public void Run(EcsSystems ecsSystems)
         {
             var filter = ecsSystems.GetWorld().Filter<PlayerComponent>().Inc<PlayerInputComponent>().End();
@@ -31,8 +34,8 @@ namespace ECS.Player
                 if (moveInput == 0) continue;
 
                 var currPlayerPosByHex = playerComponent.PlayerPositionByHexCoordinates;
-                var currHexCoordinateByDirIndex = HexCoordinatesByDirectionIndex(playerComponent.PlayerDirectionIndex);
-                var targetHexPos = new HexCoordinates(currPlayerPosByHex.X + currHexCoordinateByDirIndex.X * moveInput, currPlayerPosByHex.Z + currHexCoordinateByDirIndex.Z * moveInput);
+                var currHexCoordinateByDirIndex = new HexCoordinates(0, 0).DirectionToHex(playerComponent.PlayerDirectionIndex);
+                var targetHexPos = (currPlayerPosByHex + currHexCoordinateByDirIndex) * moveInput;
 
                 if (StepByHexValidator(ecsSystems, targetHexPos))
                 {
@@ -46,19 +49,6 @@ namespace ECS.Player
                 
                 playerInputComponent.MoveInput = 0;
             }
-        }
-        private HexCoordinates HexCoordinatesByDirectionIndex(int currentDirectionIndex)
-        {
-            return currentDirectionIndex switch
-            {
-                0 => new HexCoordinates(1, 0),
-                1 => new HexCoordinates(1, -1),
-                2 => new HexCoordinates(0, -1),
-                3 => new HexCoordinates(-1, 0),
-                4 => new HexCoordinates(-1, 1),
-                5 => new HexCoordinates(0, 1),
-                _ => throw new ArgumentOutOfRangeException(nameof(currentDirectionIndex), currentDirectionIndex, "Direction index out of range wtf")
-            };
         }
 
         private bool StepByHexValidator(EcsSystems ecsSystems, HexCoordinates targetHexPos)
@@ -74,8 +64,7 @@ namespace ECS.Player
             foreach (var entity in cellFilter)
             {
                 ref var cellComponent = ref cellPool.Get(entity);
-                if (cellComponent.Coordinates.X == targetHexPos.X &&
-                    cellComponent.Coordinates.Z == targetHexPos.Z)
+                if (cellComponent.Coordinates == targetHexPos)
                 {
                     isValid = true;
                     break;
@@ -97,9 +86,9 @@ namespace ECS.Player
             {
                 ref var hexCellPos = ref poolHexCellPosition.Get(entity);
                 ref var hexCellInputColorComponent = ref poolHexCellInputColor.Get(entity);
-                
-                for (var i = 0; i < Upper; i++)
-                    if (hexCellPos.Coordinates.X == (X[i] + completeStepHexCoordinates.X) && hexCellPos.Coordinates.Z == (Z[i] + completeStepHexCoordinates.Z)) hexCellInputColorComponent.IsChanged = true;
+
+                var pos = hexCellPos;
+                foreach (var t in _stepHexesToEffect.Where(t => pos.Coordinates == t + completeStepHexCoordinates)) hexCellInputColorComponent.IsChanged = true;
             }
 
             return null;

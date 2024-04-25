@@ -5,6 +5,8 @@ using ECS.Player.Components;
 using ECS.Start;
 using ECS.Systems;
 
+using Hex;
+
 using Leopotam.EcsLite;
 
 using UnityEngine;
@@ -27,6 +29,10 @@ namespace ECS.Player
             var playerInputPool = ecsWorld.GetPool<PlayerInputComponent>();
             playerInputPool.Add(playerEntity);
             ref var playerInputComponent = ref playerInputPool.Get(playerEntity);
+            
+            var playerHandPool = ecsWorld.GetPool<PlayerHandComponent>();
+            playerHandPool.Add(playerEntity);
+            ref var playerHandComponent = ref playerHandPool.Get(playerEntity);
 
             var playerGo = Object.Instantiate(gameSceneData.GamePrefabsSo.PlayerPrefab,
                 HexCoordinates.ToPosition(Constants.PlayerDefaultConfiguration.PlayerStartPositionByHexCoordinates) + Constants.PlayerDefaultConfiguration.PlayerPositionOffset, 
