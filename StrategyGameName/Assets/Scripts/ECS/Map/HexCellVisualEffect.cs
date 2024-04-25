@@ -1,6 +1,10 @@
-﻿using ECS.Data;
+﻿using DG.Tweening;
+
+using ECS.Data;
 
 using Leopotam.EcsLite;
+
+using UnityEngine;
 
 namespace ECS.Map
 {
@@ -17,7 +21,14 @@ namespace ECS.Map
                 ref var hexCellColorComponent = ref hexColorCompPool.Get(entity);
                 ref var hexCellMaterialComponent = ref hexCellMaterialPool.Get(entity);
 
-                if (hexCellColorComponent.IsChanged) hexCellMaterialComponent.MeshRenderer.material.SetColor(Constants.Tags.EmissionColorTag, hexCellColorComponent.Color);
+                if (hexCellColorComponent.IsChanged)
+                {
+                    hexCellMaterialComponent.MeshRenderer.material.DOColor(Constants.EffectColors.BlueStep,Constants.Tags.EmissionColorTag, 1f);
+
+                    hexCellMaterialComponent.MeshRenderer.material.DOColor(Color.black,Constants.Tags.EmissionColorTag, 1f);
+                    
+                    hexCellColorComponent.IsChanged = false;
+                }
             }
         }
     }

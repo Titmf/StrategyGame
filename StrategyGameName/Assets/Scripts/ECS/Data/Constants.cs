@@ -14,8 +14,8 @@ namespace ECS.Data
             public const float PlayerDefaultStepDistance = HexMetrics.innerRadius * 2f;
             public const float RotationStepAngle = 60f;
             
-            public const float PlayerDefaultStepDuration = 0.4f;
-            public const float PlayerDefaultRotationDuration  = 0.2f;
+            public const float PlayerDefaultStepDuration = 0.6f;
+            public const float PlayerDefaultRotationDuration  = 0.4f;
             
             public const int PlayerMaxHealth = 100;
             public const int PlayerManaMax = 100;
@@ -43,6 +43,10 @@ namespace ECS.Data
             public static Color DefaultColor = Color.white;
             
             public static Quaternion RotationOffsetAtInit = Quaternion.Euler(0f, 30f, 0f);
+        }
+        public static class EffectColors
+        {
+            public static Color BlueStep = new Color(r: 0f, g: 0f, b: 255f, a: 3f);
         }
     }
 }

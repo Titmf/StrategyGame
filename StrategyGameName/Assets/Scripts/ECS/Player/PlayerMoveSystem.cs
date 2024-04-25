@@ -12,10 +12,10 @@ namespace ECS.Player
 {
     public class PlayerMoveSystem : IEcsRunSystem
     {
-        private int[] X = new int[] { 1, 1, 0, -1, -1, 0 };
-        private int[] Z = new int[] { 0, -1, -1, 0, 1, 1 };
+        private int[] X = new int[] { 1, 1, 0, -1, -1, 0, 0 };
+        private int[] Z = new int[] { 0, -1, -1, 0, 1, 1, 0 };
         
-        private const int Upper = 6;
+        private const int Upper = 7;
         public void Run(EcsSystems ecsSystems)
         {
             var filter = ecsSystems.GetWorld().Filter<PlayerComponent>().Inc<PlayerInputComponent>().End();
@@ -41,9 +41,7 @@ namespace ECS.Player
 
                     playerComponent.PlayerTransform.
                         DOMove(targetPosition, Constants.PlayerDefaultCharacteristics.PlayerDefaultStepDuration).
-                        SetEase(Ease.InOutSine);
-                    
-                    StepEffect(targetHexPos, ecsSystems);
+                        SetEase(Ease.InOutSine).OnComplete(() => StepEffect(targetHexPos, ecsSystems));
                 }
                 
                 playerInputComponent.MoveInput = 0;
@@ -86,7 +84,8 @@ namespace ECS.Player
             return isValid;
         }
 
-        private void StepEffect(HexCoordinates CompleteStepHexCoordinates, EcsSystems ecsSystems)
+        // TODO: To Hex Own Sys?
+        private TweenCallback StepEffect(HexCoordinates completeStepHexCoordinates, EcsSystems ecsSystems)
         {
             var world = ecsSystems.GetWorld();
             var ecsFilter = world.Filter<HexCellPositionComponent>().Inc<HexCellInputColorComponent>().End();
@@ -100,8 +99,10 @@ namespace ECS.Player
                 ref var hexCellInputColorComponent = ref poolHexCellInputColor.Get(entity);
                 
                 for (var i = 0; i < Upper; i++)
-                    if (hexCellPos.Coordinates.X == (X[i] + CompleteStepHexCoordinates.X) && hexCellPos.Coordinates.Z == (Z[i] + CompleteStepHexCoordinates.Z)) hexCellInputColorComponent.IsChanged = true;
+                    if (hexCellPos.Coordinates.X == (X[i] + completeStepHexCoordinates.X) && hexCellPos.Coordinates.Z == (Z[i] + completeStepHexCoordinates.Z)) hexCellInputColorComponent.IsChanged = true;
             }
+
+            return null;
         }
     }
 }
