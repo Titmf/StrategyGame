@@ -38,7 +38,7 @@ namespace ECS.Map {
                     hexCellPositionComponent.Position = position;
                     hexCellPositionComponent.Coordinates = HexCoordinates.FromOffsetCoordinates(x, z);
                     
-                    hexCellColorComponent.Color = Constants.HexDefaultConfiguration.DefaultColor;
+                    hexCellColorComponent.Color = Constants.EffectColors.BlueStep;
                     #endregion
                 }
             }

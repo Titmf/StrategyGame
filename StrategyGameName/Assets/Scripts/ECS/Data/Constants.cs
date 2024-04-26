@@ -42,13 +42,12 @@ namespace ECS.Data
         }
         public static class HexDefaultConfiguration
         {
-            public static Color DefaultColor = Color.white;
-            
             public static Quaternion RotationOffsetAtInit = Quaternion.Euler(0f, 30f, 0f);
         }
         public static class EffectColors
         {
             public static Color BlueStep = new Color(r: 0f, g: 0f, b: 255f, a: 3f);
+            public static Color RedStep = new Color(r: 255f, g: 0f, b: 0f, a: 3f);
         }
     }
 }

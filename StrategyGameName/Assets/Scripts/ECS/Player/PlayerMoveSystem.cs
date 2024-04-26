@@ -16,7 +16,7 @@ namespace ECS.Player
     {
         private readonly HexCoordinates[] _stepHexesToEffect = {
             new(1, 0), new(1, -1), new(0, -1), new(-1, 0),
-            new(-1, 1), new(0, 1), new(0, 0)
+            new(-1, 1), new(0, 1)
         };
         public void Run(EcsSystems ecsSystems)
         {
@@ -34,18 +34,22 @@ namespace ECS.Player
 
                 var currPlayerPosByHex = playerComponent.PlayerPositionByHexCoordinates;
                 var currHexCoordinateByDirIndex = new HexCoordinates(0, 0).DirectionToHex(playerComponent.PlayerDirectionIndex);
-                var targetHexPos = (currPlayerPosByHex + currHexCoordinateByDirIndex) * moveInput;
+                var targetHexPos = currPlayerPosByHex + currHexCoordinateByDirIndex * moveInput;
 
                 if (StepByHexValidator(ecsSystems, targetHexPos))
                 {
                     playerComponent.PlayerPositionByHexCoordinates = targetHexPos;
                     var targetPosition = HexCoordinates.ToPosition(targetHexPos) + Constants.PlayerDefaultConfiguration.PlayerPositionOffset;
 
-                    playerComponent.PlayerTransform.
+                    var mySequence = DOTween.Sequence();
+
+                    mySequence.Append(playerComponent.PlayerTransform.
                         DOMove(targetPosition, Constants.PlayerDefaultCharacteristics.PlayerDefaultStepDuration).
-                        SetEase(Ease.InOutSine).OnComplete(() => StepEffect(targetHexPos, ecsSystems));
+                        SetEase(Ease.InOutSine));
+                    mySequence.AppendCallback(() => StepEffect(targetHexPos, ecsSystems));
+                    mySequence.AppendInterval(0.3f);
+                    mySequence.AppendCallback(() => StepCascadeEffect(targetHexPos, ecsSystems));
                 }
-                
                 playerInputComponent.MoveInput = 0;
             }
         }
@@ -71,9 +75,8 @@ namespace ECS.Player
             }
             return isValid;
         }
-
         // TODO: To Hex Own Sys?
-        private TweenCallback StepEffect(HexCoordinates completeStepHexCoordinates, EcsSystems ecsSystems)
+        private void StepEffect(HexCoordinates completeStepHexCoordinates, EcsSystems ecsSystems)
         {
             var world = ecsSystems.GetWorld();
             var ecsFilter = world.Filter<HexCellPositionComponent>().Inc<HexCellInputColorComponent>().End();
@@ -85,12 +88,35 @@ namespace ECS.Player
             {
                 ref var hexCellPos = ref poolHexCellPosition.Get(entity);
                 ref var hexCellInputColorComponent = ref poolHexCellInputColor.Get(entity);
+                
+                if (hexCellPos.Coordinates == completeStepHexCoordinates)
+                {
+                    hexCellInputColorComponent.IsChanged = true;
+                    hexCellInputColorComponent.Color = Constants.EffectColors.RedStep;
+                }
+            }
+        }
+        private void StepCascadeEffect(HexCoordinates completeStepHexCoordinates, EcsSystems ecsSystems)
+        {
+            var world = ecsSystems.GetWorld();
+            var ecsFilter = world.Filter<HexCellPositionComponent>().Inc<HexCellInputColorComponent>().End();
+            
+            var poolHexCellPosition = world.GetPool<HexCellPositionComponent>();
+            var poolHexCellInputColor = world.GetPool<HexCellInputColorComponent>();    
+
+            foreach (var entity in ecsFilter)
+            {
+                ref var hexCellPos = ref poolHexCellPosition.Get(entity);
+                ref var hexCellInputColorComponent = ref poolHexCellInputColor.Get(entity);
 
                 var pos = hexCellPos;
-                foreach (var t in _stepHexesToEffect.Where(t => pos.Coordinates == t + completeStepHexCoordinates)) hexCellInputColorComponent.IsChanged = true;
+                
+                foreach (var t in _stepHexesToEffect.Where(t => pos.Coordinates == t + completeStepHexCoordinates))
+                {
+                    hexCellInputColorComponent.IsChanged = true;
+                    hexCellInputColorComponent.Color = Constants.EffectColors.BlueStep;
+                }
             }
-
-            return null;
         }
     }
 }

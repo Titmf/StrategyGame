@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6806efcec5b4e7f9b874fecf2d22bf0, type: 3}
   m_Name: MapConfigurationSo
   m_EditorClassIdentifier: 
-  ChunkCountX: 20
-  ChunkCountZ: 20
+  ChunkCountX: 5
+  ChunkCountZ: 5

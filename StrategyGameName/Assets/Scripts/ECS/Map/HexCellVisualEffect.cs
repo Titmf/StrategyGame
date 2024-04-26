@@ -23,7 +23,7 @@ namespace ECS.Map
 
                 if (hexCellColorComponent.IsChanged)
                 {
-                    hexCellMaterialComponent.MeshRenderer.material.DOColor(Constants.EffectColors.BlueStep,Constants.Tags.EmissionColorTag, 1f);
+                    hexCellMaterialComponent.MeshRenderer.material.DOColor(hexCellColorComponent.Color,Constants.Tags.EmissionColorTag, 1f);
 
                     hexCellMaterialComponent.MeshRenderer.material.DOColor(Color.black,Constants.Tags.EmissionColorTag, 1f);
                     
