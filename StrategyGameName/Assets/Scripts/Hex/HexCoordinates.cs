@@ -32,13 +32,15 @@ namespace Hex
 		{
 			return currentDirectionIndex switch
 			{
+				-1 => new HexCoordinates(0, 1),
 				0 => new HexCoordinates(1, 0),
 				1 => new HexCoordinates(1, -1),
 				2 => new HexCoordinates(0, -1),
 				3 => new HexCoordinates(-1, 0),
 				4 => new HexCoordinates(-1, 1),
 				5 => new HexCoordinates(0, 1),
-				_ => throw new ArgumentOutOfRangeException(nameof(currentDirectionIndex), currentDirectionIndex, "Direction index out of range wtf")
+				6 => new HexCoordinates(1, 0),
+				_ => throw new ArgumentOutOfRangeException(nameof(currentDirectionIndex), currentDirectionIndex, "Direction index out of range wtf" + currentDirectionIndex)
 			};
 		}
 		public static Vector3 ToPosition(HexCoordinates other) {

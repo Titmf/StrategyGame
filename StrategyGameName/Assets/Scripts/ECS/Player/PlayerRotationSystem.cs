@@ -25,10 +25,8 @@ namespace ECS.Player
                 ref var playerInputComponent = ref playerInputPool.Get(entity);
                 
                 if (playerInputComponent.RotateInput == 0f) continue;
-                
-                playerComponent.PlayerDirectionIndex += playerInputComponent.RotateInput;
-                
-                playerComponent.PlayerDirectionIndex = CyclicIndexLimitation(playerComponent.PlayerDirectionIndex);
+
+                playerComponent.PlayerDirectionIndex = CyclicIndexLimitation(playerComponent.PlayerDirectionIndex + playerInputComponent.RotateInput);
 
                 var angle = playerComponent.PlayerDirectionIndex * Constants.PlayerDefaultCharacteristics.RotationStepAngle;
 
