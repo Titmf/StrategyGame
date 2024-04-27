@@ -25,7 +25,7 @@ namespace ECS.Player
 
                 if (playerInputComponent.FormationNumber != 0)
                 {
-                    var emptyHex = new HexCoordinates(0, 0);
+                    var emptyHex = new HexCoordinates(0, 0, 0);
 
                     playerHandComponent.HexCellsInHand = playerInputComponent.FormationNumber switch
                     {

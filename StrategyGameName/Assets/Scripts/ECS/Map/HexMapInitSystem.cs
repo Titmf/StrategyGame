@@ -36,7 +36,7 @@ namespace ECS.Map {
                     ref var hexCellColorComponent = ref cellColorPool.Get(cellEntity);
 
                     hexCellPositionComponent.Position = position;
-                    hexCellPositionComponent.Coordinates = HexCoordinates.FromOffsetCoordinates(x, z);
+                    hexCellPositionComponent.Coordinates = HexCoordinates.FromOffsetCoordinates(x, z, 0);
                     
                     hexCellColorComponent.Color = Constants.EffectColors.BlueStep;
                     #endregion

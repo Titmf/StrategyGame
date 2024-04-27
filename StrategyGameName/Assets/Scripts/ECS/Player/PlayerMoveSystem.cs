@@ -15,8 +15,8 @@ namespace ECS.Player
     public class PlayerMoveSystem : IEcsRunSystem
     {
         private readonly HexCoordinates[] _stepHexesToEffect = {
-            new(1, 0), new(1, -1), new(0, -1), new(-1, 0),
-            new(-1, 1), new(0, 1)
+            new(1, 0, 0), new(1, -1, 0), new(0, -1, 0),
+            new(-1, 0, 0), new(-1, 1, 0), new(0, 1, 0)
         };
         public void Run(EcsSystems ecsSystems)
         {
@@ -33,7 +33,7 @@ namespace ECS.Player
                 if (moveInput == 0) continue;
 
                 var currPlayerPosByHex = playerComponent.PlayerPositionByHexCoordinates;
-                var currHexCoordinateByDirIndex = new HexCoordinates(0, 0).DirectionToHex(playerComponent.PlayerDirectionIndex);
+                var currHexCoordinateByDirIndex = new HexCoordinates(0, 0,0).DirectionToHex(playerComponent.PlayerDirectionIndex);
                 var targetHexPos = currPlayerPosByHex + currHexCoordinateByDirIndex * moveInput;
 
                 if (StepByHexValidator(ecsSystems, targetHexPos))
@@ -111,7 +111,7 @@ namespace ECS.Player
 
                 var pos = hexCellPos;
                 
-                foreach (var t in _stepHexesToEffect.Where(t => pos.Coordinates == t + completeStepHexCoordinates))
+                foreach (var t in _stepHexesToEffect.Where(t => pos.Coordinates == completeStepHexCoordinates + t ))
                 {
                     hexCellInputColorComponent.IsChanged = true;
                     hexCellInputColorComponent.Color = Constants.EffectColors.BlueStep;

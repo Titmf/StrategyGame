@@ -1,7 +1,10 @@
 ﻿using DG.Tweening;
 
+using ECS.Data;
 using ECS.Map;
 using ECS.Player.Components;
+
+using Hex;
 
 using Leopotam.EcsLite;
 
@@ -42,15 +45,27 @@ namespace ECS.Player
                                 if (hexCellPos.Coordinates != hexInHand) continue;
 
                                 ref var hexCellGo = ref hexCellGameObjectPool.Get(cellEntity);
+
+                                Vector3 targetPosition;
                                 
                                 switch (playerInputComponent.OperationNumber)
                                 {
                                     case 1:
-                                        Object.Destroy(hexCellGo.GameObject);
+                                        hexCellPos.Coordinates = new HexCoordinates(hexCellPos.Coordinates.X, hexCellPos.Coordinates.Z, hexCellPos.Coordinates.Y - 1); 
+                                        targetPosition = HexCoordinates.ToPosition(hexCellPos.Coordinates);
+                                        hexCellGo.GameObject.transform.DOMove(targetPosition,
+                                            Constants.SkillDefaultConfiguration.SkillDuration);
+
+                                        Object.Destroy(hexCellGo.GameObject); //TODO to another system: checkerDeadZone
                                         ecsWorld.DelEntity(cellEntity);
+                                        
                                         break;
                                     case 2:
-                                        hexCellGo.GameObject.transform.DOMoveY( hexCellGo.GameObject.transform.position.y+65f, 1);
+                                        hexCellPos.Coordinates = new HexCoordinates(hexCellPos.Coordinates.X, hexCellPos.Coordinates.Z, hexCellPos.Coordinates.Y + 1); 
+                                        targetPosition = HexCoordinates.ToPosition(hexCellPos.Coordinates);
+                                        hexCellGo.GameObject.transform.DOMove(targetPosition,
+                                            Constants.SkillDefaultConfiguration.SkillDuration);
+                                        
                                         break;
                                     default:
                                         throw new System.NotImplementedException("There is no such skill");
